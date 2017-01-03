@@ -1,0 +1,9 @@
+{
+  "name": "ac-signature",
+  "description": "Sign payload for AdmiralCloud API",
+  "version": "0.0.1",
+  "author": "Mark Poepping / support@admiralcloud.com",
+  "dependencies": {
+    "lodash": "^4.17.2"
+  }
+}
