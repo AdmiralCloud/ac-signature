@@ -11,11 +11,11 @@ module.exports =  function(params) {
   let accessSecret = params.accessSecret;
   if (!accessSecret) return 'accessSecretMissing';
   let controller = params.controller;
-  if (!accessSecret) return 'controllerMissing';
+  if (!controller) return 'controllerMissing';
   let action = params.action;
-  if (!accessSecret) return 'actionMissing';
+  if (!action) return 'actionMissing';
   let data = _.isObject(params.payload) && params.payload;
-  if (!accessSecret) return 'payloadMustBeObject';
+  if (!data) return 'payloadMustBeObject';
 
   // make sure payload keys are ordered from A-Z!
   let keys = _.sortBy(_.keys(data), function (key) {
