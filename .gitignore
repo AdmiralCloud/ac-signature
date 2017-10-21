@@ -13,3 +13,5 @@ npm-debug.log
 **/.netbeans/**
 **/.idea/**
 **/tmp/**
+
+**report.xml**
