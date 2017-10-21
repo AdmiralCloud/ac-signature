@@ -43,7 +43,8 @@ describe('Testing API User', function () {
       .end((err, res) => {
         if (err) return done(err)
 
-        res.body.should.have.property('id')
+        res.body.should.have.property('id', _.get(config, 'userId'))
+        res.body.should.have.property('customerId', _.get(config, 'customerId'))
         res.body.should.have.property('firstname')
         res.body.should.have.property('lastname')
         res.body.should.have.property('memberGroups')
@@ -83,7 +84,7 @@ describe('Testing API User', function () {
         test.should.have.property('id')
         test.should.have.property('flag', 0)
         test.should.have.property('audioLanguage')
-
+        test.should.have.property('type', 'video')
         return done()
       });
   })

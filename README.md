@@ -39,6 +39,8 @@ Please see our article TBC for more details on using our signing methods
 Prepare a config file in test directory with the following content
 ```
 module.exports = {
+  userId: yourUserId,
+  customerId: yourCustomerId,
   accessKey: 'yourAPIuserAccessKey',
   accessSecret: 'yourAPIuserAccessSecret',
   baseUrl: 'https://api.admiralcloud.com' // optional - https://api.admiralcloud.com is already default
