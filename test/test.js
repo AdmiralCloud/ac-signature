@@ -1,11 +1,20 @@
 const acsignature = require('../index');
+const should = require('should')
 const request = require('superagent');
 const _ = require('lodash')
-const should = require('should')
 
-const accessKey = _.get(process, 'env.ACCESSKEY')
-const accessSecret = _.get(process, 'env.ACCESSSECRET')
-const baseUrl = _.get(process, 'env.BASEURL', 'https://api.admiralcloud.com')
+const fs = require('fs')
+const path = require('path')
+
+const configFile = path.join(__dirname, '/config.js')
+if (!fs.existsSync(configFile)) {
+  throw 'configFileMissing'
+}
+
+const config = require(configFile)
+const accessKey = _.get(config, 'accessKey')
+const accessSecret = _.get(config, 'accessSecret')
+const baseUrl = _.get(config, 'baseUrl', 'https://api.admiralcloud.com')
 const testMode = _.startsWith(baseUrl, 'http')
 
 describe('Testing API User', function () {

@@ -36,13 +36,14 @@ You will receive a timestamp and a hash value. Send both values including your a
 Please see our article TBC for more details on using our signing methods
 
 # Run tests
-Prepare the test environment by setting environment variables:
+Prepare a config file in test directory with the following content
 ```
-export ACCESSKEY=yourAPIuserAccessKey
-export ACCESSSECRET=yourAPIuserAccessSecret
-// optional - https://api.admiralcloud.com is already default
-export BASEURL=https://api.admiralcloud.com
+module.exports = {
+  accessKey: 'yourAPIuserAccessKey',
+  accessSecret: 'yourAPIuserAccessSecret',
+  baseUrl: 'https://api.admiralcloud.com' // optional - https://api.admiralcloud.com is already default
+}
 
-// run test with
-npm run test
 ```
+
+After that you can run "npm run test" or "npm run test-jenkins".
