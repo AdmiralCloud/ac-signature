@@ -34,3 +34,15 @@ You will receive a timestamp and a hash value. Send both values including your a
 
 # More info
 Please see our article TBC for more details on using our signing methods
+
+# Run tests
+Prepare the test environment by setting environment variables:
+```
+export ACCESSKEY=yourAPIuserAccessKey
+export ACCESSSECRET=yourAPIuserAccessSecret
+// optional - https://api.admiralcloud.com is already default
+export BASEURL=https://api.admiralcloud.com
+
+// run test with
+npm run test
+```
