@@ -1,6 +1,9 @@
 # ac-signature
 
-This module helps you to sign request for the AdmiralCloud API
+This module helps you to sign request for the AdmiralCloud media asset management.
+https://www.admiralcloud.com
+
+## Usage
 
 ```
 const acsignature = require('ac-signature');
@@ -91,6 +94,11 @@ request
 ```
 
 
+# Links
+- [Website](https://www.admiralcloud.com/)
+- [Twitter (@admiralcloud)](https://twitter.com/admiralcloud)
+- [Facebook](https://www.facebook.com/MediaAssetManagement/)
+
 # Run tests
 Prepare a config file in test directory with the following content
 ```
@@ -105,3 +113,7 @@ module.exports = {
 ```
 
 After that you can run "npm run test" or "npm run test-jenkins".
+
+## License
+
+[MIT License](https://opensource.org/licenses/MIT) Copyright © 2009-present, AdmiralCloud, Mark Poepping
