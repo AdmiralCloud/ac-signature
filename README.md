@@ -43,7 +43,7 @@ const params = {
 
 const signedValues = acsignature.sign(params)
 
-// The request then should look like this (using superagent - npm i superagent - for the request)
+// The request then should look like this (using superagent - yarn add superagent - for the request)
 const request = require('superagent')
 
 request
@@ -76,7 +76,7 @@ const params = {
 
 const signedValues = acsignature.sign(params)
 
-// The request then should look like this (using superagent - npm i superagent - for the request)
+// The request then should look like this (using superagent - yarn add superagent - for the request)
 const request = require('superagent')
 
 request
@@ -145,7 +145,7 @@ module.exports = {
 
 ```
 
-After that you can run "npm run test" or "npm run test-jenkins".
+After that you can run "yarn run test" or "yarn run test-jenkins".
 
 ## License
 
