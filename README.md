@@ -3,6 +3,10 @@
 This module helps you to sign request for the AdmiralCloud media asset management.
 https://www.admiralcloud.com
 
+### Breaking changes version 2
+Version 2 now has the function to sign the payload as well as to check the payload. So instead of acsignature(...) use acsignature.sign(...)
+
+
 ## Usage
 
 ```
