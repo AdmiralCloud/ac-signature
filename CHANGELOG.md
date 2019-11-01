@@ -1,3 +1,14 @@
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/mmpro/ac-signature/compare/v1.0.1...v1.0.2) (2019-11-01 17:25)
+
+
+### Bug Fixes
+
+* **Misc:** Version bump due to conflict with npmjs.org | MP ([f57223d693d95a6c3d263f6431a1fab4190e4842](https://github.com/mmpro/ac-signature/commit/f57223d693d95a6c3d263f6431a1fab4190e4842))    
+  Version bump due to conflict with npmjs.org
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/mmpro/ac-signature/compare/v1.0.0...v1.0.1) (2019-11-01 17:23)
 
