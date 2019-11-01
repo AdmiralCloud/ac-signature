@@ -1,3 +1,19 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/mmpro/ac-signature/compare/v1.0.2...v2.0.0) (2019-11-01 17:28)
+
+
+### Bug Fixes
+
+* **Misc:** Version bump due to conflict with npmjs.org | MP ([25d834bc5ee92e936de4df2b6a60a1cf17eee4cb](https://github.com/mmpro/ac-signature/commit/25d834bc5ee92e936de4df2b6a60a1cf17eee4cb))    
+  Version bump due to conflict with npmjs.org
+
+
+### BREAKING CHANGES
+
+* **Misc:** Now two function are available
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/mmpro/ac-signature/compare/v1.0.1...v1.0.2) (2019-11-01 17:25)
 
