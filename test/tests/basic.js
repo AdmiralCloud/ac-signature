@@ -22,10 +22,10 @@ module.exports = {
           action:       'mefind',
           payload:      {}
         }
-        let signedValues = acsignature(params)
+        let signedValues = acsignature.sign(params)
 
         request
-          .get(baseUrl + '/v2/user/me')
+          .get(baseUrl + '/v5/user/me')
           .set({
             'x-admiralcloud-accesskey': accessKey,
             'x-admiralcloud-rts':       signedValues.timestamp,
@@ -57,10 +57,10 @@ module.exports = {
             limit: 1
           }
         }
-        let signedValues = acsignature(params)
+        let signedValues = acsignature.sign(params)
 
         request
-          .post(baseUrl + '/v2/mediacontainer/findBatch')
+          .post(baseUrl + '/v5/mediacontainer/findBatch')
           .send(params.payload)
           .set({
             'x-admiralcloud-accesskey': accessKey,

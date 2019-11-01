@@ -27,10 +27,10 @@ module.exports = {
             type:       'mediahub'
           }
         }
-        let signedValues = acsignature(params)
+        let signedValues = acsignature.sign(params)
 
         request
-          .post(baseUrl + '/v3/extAuth')
+          .post(baseUrl + '/v5/extAuth')
           .send(params.payload)
           .set({
             'x-admiralcloud-accesskey':      accessKey,
@@ -54,7 +54,7 @@ module.exports = {
       it('Check auth', function(done) {
 
         request
-          .get(baseUrl + '/v3/msc/auth')
+          .get(baseUrl + '/v5/msc/auth')
           .set({
             'x-admiralcloud-auth':           extAuthToken,
             'x-admiralcloud-test':           testMode,

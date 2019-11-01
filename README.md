@@ -28,6 +28,7 @@ The actual payload you want to send to the API.
 For the following examples, we assume, that your accessKey "AKAC12344321" and you accessSecret is "my-very-good-accessSecret".
 
 
+## Sign a request
 ```
 // Example 1: Retrieve information about user 123
 // Token based request would be GET /user/123?token=xxx
@@ -40,7 +41,7 @@ const params = {
   action: 'find',
   payload: {"id": 123}
 
-const signedValues = acsignature(params)
+const signedValues = acsignature.sign(params)
 
 // The request then should look like this (using superagent - npm i superagent - for the request)
 const request = require('superagent')
@@ -73,7 +74,7 @@ const params = {
     "searchTerm": "My search term"
   }
 
-const signedValues = acsignature(params)
+const signedValues = acsignature.sign(params)
 
 // The request then should look like this (using superagent - npm i superagent - for the request)
 const request = require('superagent')
@@ -91,6 +92,38 @@ request
     // res.body contains the response object
   });
 
+```
+
+## Check a hashed request
+If you want to check an incoming request, you can now also use this class.
+
+```
+// Example: check hashed payload
+const acsignature = require('ac-signature');
+
+// this is the request payload (make sure to have all parameters from body, URL, etc in one object)
+let payload = {
+  searchTerm: "My search term"
+}
+
+// headers from request
+let headers = {
+  'x-admiralcloud-accesskey': 'AKAC12344321',
+  'x-admiralcloud-rts':       1572628136,
+  'x-admiralcloud-hash':      'ab124fjagd...xxxx',
+  'x-admiralcloud-debugsignature': true // optional
+}
+
+let options = {
+  headers, 
+  controller: 'search',
+  action: 'search',
+  method: 'post, // req.method
+  accessSecret: 'my-very-good-accessSecret'
+}
+
+let result = acsignature.checkSignedPayload(payload, options)
+// -> result is empty if payload is ok, otherwise result contains an error message
 ```
 
 
