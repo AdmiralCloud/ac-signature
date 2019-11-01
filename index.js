@@ -82,11 +82,11 @@ const acSignature = () => {
     }
 
     // make sure payload keys are ordered from A-Z!
-    let keys = _.sortBy(_.keys(params), (key) => {
+    let keys = _.sortBy(_.keys(params), key => {
       return key
     })
     let payload = {}
-    _.forEach(keys, (key) => {
+    _.forEach(keys, key => {
       payload[key] = params[key]
     })
 
