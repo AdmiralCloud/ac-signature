@@ -74,10 +74,12 @@ const acSignature = () => {
       return error
     }
 
-     // GET request send parameters as string instead of integer -> parse that here (see route.js for parameters)
-     if (method === 'GET') {
+    // GET request send parameters as string instead of integer -> parse that here (see route.js for parameters)
+    if (method === 'GET') {
       for (let key in params) {
-        if (parseInt(params[key])) params[key] = parseInt(params[key])
+        if (params[key] === parseInt(params[key], 10)) {
+          params[key] = parseInt(params[key])
+        }
       }
     }
 
