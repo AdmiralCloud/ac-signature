@@ -1,3 +1,14 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/mmpro/ac-signature/compare/v2.0.0...v2.0.1) (2019-12-21 15:40)
+
+
+### Bug Fixes
+
+* **Misc:** Fixed check for integers in GET params | MP ([8a11719b936d31b0a8f75ebeb6abf8a09a2b28dc](https://github.com/mmpro/ac-signature/commit/8a11719b936d31b0a8f75ebeb6abf8a09a2b28dc))    
+  Fixed check for integers in GET params
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/mmpro/ac-signature/compare/v1.0.2...v2.0.0) (2019-11-01 17:28)
 
