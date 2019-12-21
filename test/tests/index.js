@@ -7,4 +7,5 @@
 module.exports = {
   basic: require('./basic'),
   extAuth: require('./extAuth'),
+  search: require('./search'),
 }
