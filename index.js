@@ -37,7 +37,6 @@ const acSignature = () => {
       const debugPrefix = _.padEnd('ACSignature', 14)
       const debugPadding = 20
       console.log(_.pad('Create Signature', 80, '-'))
-      console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
       console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload length', debugPadding), valueToHash.length)
