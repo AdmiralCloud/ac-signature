@@ -1,3 +1,28 @@
+<a name="2.0.2"></a>
+
+## [2.0.2](https://github.com/mmpro/ac-signature/compare/v2.0.1..v2.0.2) (2020-03-28 22:11:18)
+
+
+### Bug Fix
+
+* **App:** Typo fix | MP | [f840e38f4a1fbf14f79769d6b6cb4e5e3ad647c6](https://github.com/mmpro/ac-signature/commit/f840e38f4a1fbf14f79769d6b6cb4e5e3ad647c6)    
+Do not use accessKey here - it is not available
+### Refactor
+
+* **Misc:** Improved logging | MP | [99b564e5c54e9e9967b131b34053ffd61e8acf93](https://github.com/mmpro/ac-signature/commit/99b564e5c54e9e9967b131b34053ffd61e8acf93)    
+Improved logging
+### Chores
+
+* **App:** Updated packages | MP | [0468a3050742dac101dbb0f8ea6186f48862c03d](https://github.com/mmpro/ac-signature/commit/0468a3050742dac101dbb0f8ea6186f48862c03d)    
+Updated packages
+* **App:** Use AC Semantic Release Management | MP | [44a2083f0cb105ba33b3e4f10d7b8a5069247985](https://github.com/mmpro/ac-signature/commit/44a2083f0cb105ba33b3e4f10d7b8a5069247985)    
+Use AC Semantic Release Management
+* **deps:** bump acorn from 7.1.0 to 7.1.1 | [6dc2f1476bcfdb76a8363f07af87957e94e97b6a](https://github.com/mmpro/ac-signature/commit/6dc2f1476bcfdb76a8363f07af87957e94e97b6a)    
+Merge: bb320ed 6b4d54c  
+Merge pull request #3 from mmpro/dependabot/npm_and_yarn/acorn-7.1.1
+* **deps:** bump acorn from 7.1.0 to 7.1.1 | [6b4d54c58b88b68f04d94f7e00c3c6102f5680f0](https://github.com/mmpro/ac-signature/commit/6b4d54c58b88b68f04d94f7e00c3c6102f5680f0)    
+Bumps [acorn](https://github.com/acornjs/acorn) from 7.1.0 to 7.1.1.  
+[acornjs/acorn#releases)]([Release notes](https://github.com/acornjs/acorn/releases)) [acornjs/acorn#7.1.0...7.1.1)]([Commits](https://github.com/acornjs/acorn/compare/7.1.0...7.1.1)) Signed-off-by: dependabot[bot] <support@github.com>
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/mmpro/ac-signature/compare/v2.0.0...v2.0.1) (2019-12-21 15:40)
 
