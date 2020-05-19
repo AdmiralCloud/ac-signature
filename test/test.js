@@ -1,25 +1,111 @@
+const expect = require('expect')
+const acsignature = require('../index')
 const _ = require('lodash')
 
-const fs = require('fs')
-const path = require('path')
+describe('Test signature', function () {
+  const accessKey = Math.random().toString('36')
+  const accessSecret = Math.random().toString('36')
 
-const configFile = path.join(__dirname, '/config.js')
-if (!fs.existsSync(configFile)) {
-  throw 'configFileMissing'
-}
+  const controller = 'user'
+  const action = 'mefind'
 
-// If true, only "localTest" will be executed - use npm run test-local
-const testMode = _.get(process, 'env.TESTMODE', false)
 
-global.config = require(configFile)
+  it('Check with empty payload', (done) => {
+    let payload = {}
+    let params = {
+      accessSecret,
+      controller,
+      action,
+      payload   
+    }
+    let signedValues = acsignature.sign(params)
 
-const suite = {
-  1: require('./suites/default')
-}
+    let options = {
+      controller,
+      action,
+      accessSecret,
+      hash: _.get(signedValues, 'hash'),
+      accessKey,
+      rts: _.get(signedValues, 'timestamp')
+    }
+    let result = acsignature.checkSignedPayload(payload, options)
+    expect(result).toBeUndefined()
+    return done()
+  })
 
-if (testMode) {
-  _.set(suite, 2, require('./suites/localTest'))
-}
+  it('Send wrong hash', (done) => {
+    let payload = {}
+    let params = {
+      accessSecret,
+      controller,
+      action,
+      payload   
+    }
+    let signedValues = acsignature.sign(params)
+    let options = {
+      controller,
+      action,
+      accessSecret,
+      hash: 'ANBC',
+      accessKey,
+      rts: _.get(signedValues, 'timestamp')
+    }
+    let result = acsignature.checkSignedPayload(payload, options)
+    expect(result).toEqual({ "message": "signedPayload_hashMismatch", "status": 401 })
+    return done()
+  })
 
-if (testMode) suite[2].testsuite()
-else suite[1].testsuite()
+
+  it('Send wrong timestamp', (done) => {
+    let payload = {}
+    let params = {
+      accessSecret,
+      controller,
+      action,
+      payload   
+    }
+    let signedValues = acsignature.sign(params)
+    let options = {
+      controller,
+      action,
+      accessSecret,
+      hash: _.get(signedValues, 'hash'),
+      accessKey,
+      rts: Date.now()/1000+100
+    }
+    let result = acsignature.checkSignedPayload(payload, options)
+    expect(result).toEqual({ "message": "signedPayload_hashMismatch", "status": 401 })
+    return done()
+  })
+
+  it('Check with payload', (done) => {
+    let payload = {
+      key1: true,
+      key2: 'is a string',
+      key3: ['arrayValue1', 'arrayValue2'],
+      key4: {
+        isEnabled: true
+      }
+    }
+    let params = {
+      accessSecret,
+      controller,
+      action,
+      payload   
+    }
+    let signedValues = acsignature.sign(params)
+
+    let options = {
+      controller,
+      action,
+      accessSecret,
+      hash: _.get(signedValues, 'hash'),
+      accessKey,
+      rts: _.get(signedValues, 'timestamp')
+    }
+    let result = acsignature.checkSignedPayload(payload, options)
+    expect(result).toBeUndefined()
+    return done()
+  })
+
+})
