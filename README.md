@@ -51,7 +51,7 @@ const signedValues = acsignature.sign(params)
 const request = require('superagent')
 
 request
-  .get('https://api.admiralcloud.com/v3/user/123')
+  .get('https://api.admiralcloud.com/v5/user/123')
   .set({
     'x-admiralcloud-accesskey': 'AKAC12344321',
     'x-admiralcloud-rts':       signedValues.timestamp,
@@ -84,7 +84,7 @@ const signedValues = acsignature.sign(params)
 const request = require('superagent')
 
 request
-  .post('https://api.admiralcloud.com/v3/search')
+  .post('https://api.admiralcloud.com/v5/search')
   .send(params.payload)
   .set({
     'x-admiralcloud-accesskey': 'AKAC12344321',
@@ -137,19 +137,9 @@ let result = acsignature.checkSignedPayload(payload, options)
 - [Facebook](https://www.facebook.com/MediaAssetManagement/)
 
 # Run tests
-Prepare a config file in test directory with the following content
 ```
-module.exports = {
-  userId: yourUserId,
-  customerId: yourCustomerId,
-  accessKey: 'yourAPIuserAccessKey',
-  accessSecret: 'yourAPIuserAccessSecret',
-  baseUrl: 'https://api.admiralcloud.com' // optional - https://api.admiralcloud.com is already default
-}
-
+yarn run test
 ```
-
-After that you can run "yarn run test" or "yarn run test-jenkins".
 
 ## License
 
