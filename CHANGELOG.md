@@ -1,3 +1,24 @@
+<a name="2.0.3"></a>
+
+## [2.0.3](https://github.com/mmpro/ac-signature/compare/v2.0.2..v2.0.3) (2020-07-30 16:10:41)
+
+
+### Bug Fix
+
+* **App:** Updated packages | MP | [eabb386614e9bd4a0158b8d654c42a418e5cd5f1](https://github.com/mmpro/ac-signature/commit/eabb386614e9bd4a0158b8d654c42a418e5cd5f1)    
+Updated packages - force a patch release.
+### Tests
+
+* **App:** Changed tests | MP | [3795952133761239c20d9da78462120293bcd33f](https://github.com/mmpro/ac-signature/commit/3795952133761239c20d9da78462120293bcd33f)    
+Tests are no longer dependent on AC API credentials
+### Chores
+
+* **App:** Updated packages | MP | [738a177943ccd8af1d441f48ad72de43318d16b5](https://github.com/mmpro/ac-signature/commit/738a177943ccd8af1d441f48ad72de43318d16b5)    
+Updated packages
+* **App:** Updated packages | MP | [d22c51582a0ee50cdde9ff20dc8923ca542f8f9b](https://github.com/mmpro/ac-signature/commit/d22c51582a0ee50cdde9ff20dc8923ca542f8f9b)    
+Updated packages
+* **App:** Updated packages | MP | [fde25ec7f34d6f43e29faef839869f3cb0de95bd](https://github.com/mmpro/ac-signature/commit/fde25ec7f34d6f43e29faef839869f3cb0de95bd)    
+Updated packages
 <a name="2.0.2"></a>
 
 ## [2.0.2](https://github.com/mmpro/ac-signature/compare/v2.0.1..v2.0.2) (2020-03-28 22:11:18)
