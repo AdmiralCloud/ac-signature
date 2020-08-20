@@ -1,3 +1,12 @@
+<a name="2.0.4"></a>
+
+## [2.0.4](https://github.com/mmpro/ac-signature/compare/v2.0.3..v2.0.4) (2020-08-20 06:35:36)
+
+
+### Bug Fix
+
+* **App:** Force patch after package update | MP | [6622bdb21298154a10d2d57f7d0dfe148bf6ca27](https://github.com/mmpro/ac-signature/commit/6622bdb21298154a10d2d57f7d0dfe148bf6ca27)    
+Force patch after package update
 <a name="2.0.3"></a>
 
 ## [2.0.3](https://github.com/mmpro/ac-signature/compare/v2.0.2..v2.0.3) (2020-07-30 16:10:41)
