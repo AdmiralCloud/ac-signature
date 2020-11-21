@@ -97,7 +97,7 @@ const acSignature = () => {
     const mechanism = crypto.createHmac('sha256', accessSecret)
     const calculatedHash = mechanism.update(valueToHash).digest('hex')
 
-    if (debugSignature) {
+    if (debugSignature || calculatedHash !== hash) {
       const debugPrefix = _.padEnd('ACSignature', 14)
       const debugPadding = 20
       console.log(_.pad('Check Signature', 80, '-'))
