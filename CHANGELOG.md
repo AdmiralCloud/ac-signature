@@ -1,3 +1,16 @@
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/mmpro/ac-signature/compare/v2.0.4..v2.0.5) (2020-11-21 19:01:25)
+
+
+### Bug Fix
+
+* **App:** Always log hash mismatch | MP | [20b842f309faa43cbd928556f96ccb93b8759661](https://github.com/mmpro/ac-signature/commit/20b842f309faa43cbd928556f96ccb93b8759661)    
+Always log hash mismatch
+### Chores
+
+* **App:** Updated packages | MP | [40c61cf9120b872e13551fe2470431bdf9c048f8](https://github.com/mmpro/ac-signature/commit/40c61cf9120b872e13551fe2470431bdf9c048f8)    
+Updated packages
 <a name="2.0.4"></a>
 
 ## [2.0.4](https://github.com/mmpro/ac-signature/compare/v2.0.3..v2.0.4) (2020-08-20 06:35:36)
