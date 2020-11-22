@@ -3,6 +3,8 @@
 This module helps you to sign request for the AdmiralCloud media asset management.
 https://www.admiralcloud.com
 
+Please note, that every signed payload is only valid for 10 seconds by default. The same is true for time deviation (+/- 10 seconds), so make sure your computer's time is in sync/valid. You can set the deviation with a custom value using options
+
 ### Breaking changes version 2
 Version 2 now has the function to sign the payload as well as to check the payload. So instead of acsignature(...) use acsignature.sign(...)
 
@@ -129,6 +131,11 @@ let options = {
 let result = acsignature.checkSignedPayload(payload, options)
 // -> result is empty if payload is ok, otherwise result contains an error message
 ```
+
+# Options
+Option | Type | Remarks
+---|---|---|
+deviation | number | Number in seconds, RTS/time deviation is allowed. If the timestamp is out of range, the request will fail
 
 
 # Links

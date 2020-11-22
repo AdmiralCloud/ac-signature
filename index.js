@@ -61,6 +61,7 @@ const acSignature = () => {
     const controller = _.toLower(_.get(options, 'controller'))
     const action = _.toLower(_.get(options, 'action'))
     const accessSecret = _.get(options, 'accessSecret')
+    const deviation = _.get(options, 'deviation', 10)
    
     // determine by headers
     const hash =  _.get(options, 'hash', _.get(headers, 'x-admiralcloud-hash'))
@@ -73,6 +74,15 @@ const acSignature = () => {
       let error = { message: errorPrefix + '_hashMissing', status: 401 }
       return error
     }
+
+    if (deviation) {
+      const min = new Date().getTime()/1000 - deviation
+      const max = new Date().getTime()/1000 + deviation
+      if (ts < min || ts > max) {
+        let error = { message: errorPrefix + '_rtsDeviation', status: 401 }
+        return error
+      }
+    } 
 
     // GET request send parameters as string instead of integer -> parse that here (see route.js for parameters)
     if (method === 'GET') {
@@ -112,7 +122,7 @@ const acSignature = () => {
     }
 
     let error
-    if (calculatedHash !== hash) error = { message: _.get(options, 'errorPrefix', 'signedPayload') + '_hashMismatch', status: 401 }
+    if (calculatedHash !== hash) error = { message: errorPrefix + '_hashMismatch', status: 401 }
     return error
   }
 

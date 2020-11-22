@@ -51,7 +51,7 @@ describe('Test signature', function () {
       rts: _.get(signedValues, 'timestamp')
     }
     let result = acsignature.checkSignedPayload(payload, options)
-    expect(result).toEqual({ "message": "signedPayload_hashMismatch", "status": 401 })
+    expect(result).toEqual({ "message": "acsignature_hashMismatch", "status": 401 })
     return done()
   })
 
@@ -74,7 +74,7 @@ describe('Test signature', function () {
       rts: Date.now()/1000+100
     }
     let result = acsignature.checkSignedPayload(payload, options)
-    expect(result).toEqual({ "message": "signedPayload_hashMismatch", "status": 401 })
+    expect(result).toEqual({ "message": "acsignature_rtsDeviation", "status": 401 })
     return done()
   })
 
