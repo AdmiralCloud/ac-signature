@@ -1,3 +1,12 @@
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/mmpro/ac-signature/compare/v2.0.5..v2.0.6) (2020-11-22 14:56:49)
+
+
+### Bug Fix
+
+* **App:** Check for timestamp deviation | MP | [c861ec91241d3c3bd667b3dc8aeefa1a7fa33caa](https://github.com/mmpro/ac-signature/commit/c861ec91241d3c3bd667b3dc8aeefa1a7fa33caa)    
+Reject payloads that were signed with an outdated timestamp (+/- 10 seconds)
 <a name="2.0.5"></a>
 
 ## [2.0.5](https://github.com/mmpro/ac-signature/compare/v2.0.4..v2.0.5) (2020-11-21 19:01:25)
