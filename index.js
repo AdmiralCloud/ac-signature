@@ -9,34 +9,37 @@ const _ = require('lodash');
 const acSignature = () => {
 
   const sign = (params) => {
-    let accessSecret = params.accessSecret;
+    const accessSecret = params.accessSecret;
     if (!accessSecret) return 'accessSecretMissing';
-    let controller = params.controller;
+    const controller = params.controller;
     if (!controller) return 'controllerMissing';
-    let action = params.action;
+    const action = params.action;
     if (!action) return 'actionMissing';
-    let data = _.isObject(params.payload) && params.payload;
+    const data = _.isObject(params.payload) && params.payload;
     if (!data) return 'payloadMustBeObject';
+    // debugging
+    const accessKey = _.get(params, 'accessKey') // only for debugging
 
     // make sure payload keys are ordered from A-Z!
-    let keys = _.sortBy(_.keys(data), key => {
+    const keys = _.sortBy(_.keys(data), key => {
       return key;
     });
-    let payload = {};
+    const payload = {};
     _.each(keys, key => {
       payload[key] = data[key];
     });
 
-
-    let ts = parseInt(new Date().getTime()/1000);
-    let valueToHash = _.toLower(controller) + '\n' + _.toLower(action) + '\n' + ts + (_.isEmpty(payload) ? '' : '\n'+JSON.stringify(payload));
-    let mechanism = crypto.createHmac('sha256',accessSecret);
-    let hash = mechanism.update(valueToHash).digest("hex");
+    // for debugging you can use your own timestamp
+    const ts = _.get(params, 'ts', parseInt(new Date().getTime()/1000))
+    const valueToHash = _.toLower(controller) + '\n' + _.toLower(action) + '\n' + ts + (_.isEmpty(payload) ? '' : '\n'+JSON.stringify(payload));
+    const mechanism = crypto.createHmac('sha256',accessSecret);
+    const hash = mechanism.update(valueToHash).digest("hex");
 
     if (params.debug) {
       const debugPrefix = _.padEnd('ACSignature', 14)
       const debugPadding = 20
       console.log(_.pad('Create Signature', 80, '-'))
+      if (accessKey) console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
       console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload length', debugPadding), valueToHash.length)
