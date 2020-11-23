@@ -1,3 +1,14 @@
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/mmpro/ac-signature/compare/v2.0.6..v2.0.7) (2020-11-23 11:48:54)
+
+
+### Bug Fix
+
+* **App:** Added some debugging options | MP | [6546fff22703f0c92e56d471eccd56d7f13ce66e](https://github.com/mmpro/ac-signature/commit/6546fff22703f0c92e56d471eccd56d7f13ce66e)    
+
+* **App:** Added some debugging options | MP | [786979514ec3f6ef7c51d6fcb3beb72b109cf651](https://github.com/mmpro/ac-signature/commit/786979514ec3f6ef7c51d6fcb3beb72b109cf651)    
+Added some debugging options
 <a name="2.0.6"></a>
 
 ## [2.0.6](https://github.com/mmpro/ac-signature/compare/v2.0.5..v2.0.6) (2020-11-22 14:56:49)
