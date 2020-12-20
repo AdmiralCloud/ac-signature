@@ -5,15 +5,17 @@
   "author": "Mark Poepping / support@admiralcloud.com",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mmpro/ac-signature"
+    "url": "git://github.com/admiralcloud/ac-signature"
   },
   "homepage": "https://www.admiralcloud.com",
+  "license": "MIT",
+  "keywords": ["admiralcloud", "payload", "hash", "request", "signature"],
   "dependencies": {
     "lodash": "^4.17.20"
   },
   "devDependencies": {
-    "ac-semantic-release": "^0.2.2",
-    "eslint": "^7.7.0",
+    "ac-semantic-release": "^0.2.5",
+    "eslint": "^7.16.0",
     "expect": "^26.4.0",
     "mocha": "^8.1.1",
     "mocha-junit-reporter": "^2.0.0",
