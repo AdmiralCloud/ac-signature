@@ -148,6 +148,26 @@ deviation | number | Number in seconds, RTS/time deviation is allowed. If the ti
 yarn run test
 ```
 
+# AC License Report
+|Stat|Value|
+|---|---|
+|Repository|ac-signature|
+|Date|Sun Dec 20 2020 15:15:34 GMT+0100 (GMT+01:00)|
+|Total|7|
+|Analyzed|7|
+
+&nbsp;
+### Licenses
+|License|Count|Percent|Info|
+|---|---|---|---|
+|MIT|7|100|https://choosealicense.com/licenses/mit/|
+
+&nbsp;
+### Detailed Report
+|License|Packages|
+|---|---|
+|MIT|ac-semantic-release, eslint, expect, lodash, mocha, mocha-junit-reporter, superagent|
+
 ## License
 
 [MIT License](https://opensource.org/licenses/MIT) Copyright © 2009-present, AdmiralCloud, Mark Poepping
