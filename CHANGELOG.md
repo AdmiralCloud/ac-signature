@@ -1,3 +1,16 @@
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/mmpro/ac-signature/compare/v2.0.7..v2.0.8) (2020-12-20 14:16:59)
+
+
+### Bug Fix
+
+* **App:** Updated packages | MP | [e51d5286387b9b1478ec94b7e0bf63c272bf24a1](https://github.com/mmpro/ac-signature/commit/e51d5286387b9b1478ec94b7e0bf63c272bf24a1)    
+Updated packages
+### Documentation
+
+* **App:** Added license report | MP | [99bcb599045c29ba6b2863b975aec4d86121e5f4](https://github.com/mmpro/ac-signature/commit/99bcb599045c29ba6b2863b975aec4d86121e5f4)    
+Added license report
 <a name="2.0.7"></a>
 
 ## [2.0.7](https://github.com/mmpro/ac-signature/compare/v2.0.6..v2.0.7) (2020-11-23 11:48:54)

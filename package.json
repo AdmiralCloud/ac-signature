@@ -1,7 +1,7 @@
 {
   "name": "ac-signature",
   "description": "Sign payload for AdmiralCloud API",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "author": "Mark Poepping / support@admiralcloud.com",
   "repository": {
     "type": "git",
@@ -9,7 +9,13 @@
   },
   "homepage": "https://www.admiralcloud.com",
   "license": "MIT",
-  "keywords": ["admiralcloud", "payload", "hash", "request", "signature"],
+  "keywords": [
+    "admiralcloud",
+    "payload",
+    "hash",
+    "request",
+    "signature"
+  ],
   "dependencies": {
     "lodash": "^4.17.20"
   },
