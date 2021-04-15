@@ -82,7 +82,7 @@ const acSignature = () => {
       const min = new Date().getTime()/1000 - deviation
       const max = new Date().getTime()/1000 + deviation
       if (ts < min || ts > max) {
-        let error = { message: errorPrefix + '_rtsDeviation', status: 401 }
+        let error = { message: errorPrefix + '_rtsDeviation', status: 401, additionalInfo: { ts, deviation} }
         return error
       }
     } 
