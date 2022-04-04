@@ -8,6 +8,35 @@ const _ = require('lodash');
 
 const acSignature = () => {
 
+  const sign2 = (params) => {
+    const accessSecret = params.accessSecret;
+    if (!accessSecret) return 'accessSecretMissing';
+    const path = params.path;
+    if (!path) return 'pathMissing';
+
+    // make sure payload keys are ordered from A-Z!
+    const data = (_.isObject(params.payload) && params.payload) || {};
+    if (!data) return 'payloadMustBeObject';
+
+    const keys = _.sortBy(_.keys(data), (key) => {
+      return key;
+    });
+    const payload = {};
+    _.each(keys, (key) => {
+      payload[key] = data[key];
+    });
+
+    const ts = _.get(params, 'ts', parseInt(new Date().getTime() / 1000));
+    const valueToHash = _.toLower(path) + '\n' + ts + '\n' + JSON.stringify(payload);
+    const mechanism = crypto.createHmac('sha256', accessSecret);
+    const hash = mechanism.update(valueToHash).digest('hex');
+
+    return {
+      hash,
+      timestamp: ts,
+    };
+  };
+
   const sign = (params) => {
     const accessSecret = params.accessSecret;
     if (!accessSecret) return 'accessSecretMissing';
@@ -59,6 +88,7 @@ const acSignature = () => {
    * Options are req.headers, accessSecret and optional other options
    */
   const checkSignedPayload = (params, options) => {
+    const path = _.get(options, 'path')
     const headers = _.get(options, 'headers')
     const method = _.get(options, 'method')
     const controller = _.toLower(_.get(options, 'controller'))
@@ -82,7 +112,7 @@ const acSignature = () => {
       const min = new Date().getTime()/1000 - deviation
       const max = new Date().getTime()/1000 + deviation
       if (ts < min || ts > max) {
-        let error = { message: errorPrefix + '_rtsDeviation', status: 401, additionalInfo: { ts, deviation} }
+        let error = { message: errorPrefix + '_rtsDeviation', status: 401, additionalInfo: { ts, deviation } }
         return error
       }
     } 
@@ -105,7 +135,14 @@ const acSignature = () => {
       payload[key] = params[key]
     })
 
-    // Check payload against hash ] Hash is calculated
+
+    // Check payload against hash ] Hash is calculated -- FORMAT V2
+    const valueToHash2 = _.toLower(path) + '\n' + ts + '\n' + JSON.stringify(payload);
+    const mechanism2 = crypto.createHmac('sha256', accessSecret);
+    const calculatedHash2 = mechanism2.update(valueToHash2).digest('hex');
+    if (calculatedHash2 === hash) return undefined;
+
+    // Check payload against hash ] Hash is calculated -- FORMAT V1
     const valueToHash = controller + '\n' + action + '\n' + ts + (_.isEmpty(payload) ? '' : '\n' + JSON.stringify(payload))
     const mechanism = crypto.createHmac('sha256', accessSecret)
     const calculatedHash = mechanism.update(valueToHash).digest('hex')
@@ -131,6 +168,7 @@ const acSignature = () => {
 
   return {
     sign,
+    sign2,
     checkSignedPayload
   }
 

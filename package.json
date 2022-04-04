@@ -28,8 +28,8 @@
     "superagent": "^6.0.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --slow 1000 --colors ./test/test.js || :",
-    "test-local": "env TESTMODE=true ./node_modules/.bin/mocha --bail --slow 1000 --colors ./test/test.js || :",
+    "test": "./node_modules/.bin/mocha --slow 1000 --colors ./test/*.js || :",
+    "test-local": "env TESTMODE=true ./node_modules/.bin/mocha --bail --slow 1000 --colors ./test/*.js || :",
     "test-jenkins": "JUNIT_REPORT_PATH=./report.xml mocha --bail --slow 1000 --colors --reporter-options junit_report_name='SIGNATURE'  || :"
   },
   "engines": {

@@ -2,7 +2,7 @@ const expect = require('expect')
 const acsignature = require('../index')
 const _ = require('lodash')
 
-describe('Test signature', function () {
+describe('Test signature format v1', function () {
   const accessKey = Math.random().toString('36')
   const accessSecret = Math.random().toString('36')
 
