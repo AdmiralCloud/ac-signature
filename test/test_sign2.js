@@ -2,7 +2,7 @@ const expect = require('expect');
 const acsignature = require('../index');
 
 describe('Test signature format v2', function () {
-  const accessSecret = Math.random().toString('36');
+  const accessSecret = Math.random().toString('36')
 
   it('Check with empty payload', (done) => {
     let signedValues = acsignature.sign2({ accessSecret, path: '/v5/user/me' });
@@ -13,7 +13,7 @@ describe('Test signature format v2', function () {
         path: '/v5/user/me',
         accessSecret,
         hash: signedValues.hash,
-        rts: signedValues.timestamp,
+        rts: signedValues.timestamp
       },
     );
     expect(result).toBeUndefined();
@@ -131,4 +131,5 @@ describe('Test signature format v2', function () {
     expect(result).toBeUndefined();
     return done();
   });
+  
 });
