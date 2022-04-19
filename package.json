@@ -33,6 +33,6 @@
     "test-jenkins": "JUNIT_REPORT_PATH=./report.xml mocha --bail --slow 1000 --colors --reporter-options junit_report_name='SIGNATURE'  || :"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=12.0.0"
   }
 }
