@@ -21,13 +21,7 @@ const acSignature = () => {
     const accessKey = _.get(params, 'accessKey') // only for debugging
 
     // make sure payload keys are ordered from A-Z!
-    const keys = _.sortBy(_.keys(data), key => {
-      return key;
-    });
-    const payload = {};
-    _.each(keys, key => {
-      payload[key] = data[key];
-    });
+    const payload = deepSort(data);
 
     // for debugging you can use your own timestamp
     const ts = _.get(params, 'ts', parseInt(new Date().getTime()/1000))
@@ -97,13 +91,7 @@ const acSignature = () => {
     }
 
     // make sure payload keys are ordered from A-Z!
-    let keys = _.sortBy(_.keys(params), key => {
-      return key
-    })
-    let payload = {}
-    _.forEach(keys, key => {
-      payload[key] = params[key]
-    })
+    const payload = deepSort(params);
 
     // Check payload against hash ] Hash is calculated
     const valueToHash = controller + '\n' + action + '\n' + ts + (_.isEmpty(payload) ? '' : '\n' + JSON.stringify(payload))
@@ -136,3 +124,24 @@ const acSignature = () => {
 
 }
 module.exports = acSignature()
+
+
+function deepSort(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map((item) => deepSort(item));
+  }
+
+  if (isObject(obj)) {
+    let out = {};
+    Object.keys(obj).sort((a, b) => a.localeCompare(b)).forEach(function (key) {
+      out[key] = deepSort(obj[key]);
+    });
+    return out;
+  }
+
+  return obj;
+
+  function isObject(o) {
+    return Object.prototype.toString.call(o) === '[object Object]';
+  }
+}

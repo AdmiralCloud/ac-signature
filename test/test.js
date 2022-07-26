@@ -117,4 +117,45 @@ describe('Test signature', function () {
     return done()
   })
 
+  it('Check with nested payload', (done) => {
+    let payload = {
+      key2: 'is a string',
+      key1: { xtreme: "foo", tags: [{tagId: 123, flag: 0}, {tagId: 124, flag: 1}, null, {}]},
+      key4: {
+        isFoo: false,
+        isEnabled: true
+      },
+      key3: ['arrayValue1', 'arrayValue2'],
+    }
+    let payload2 = { // == payload (but nested keys are reordered)
+      key2: 'is a string',
+      key1: { xtreme: "foo", tags: [{flag: 0, tagId: 123}, {flag: 1, tagId: 124}, null, {}]},
+      key4: {
+        isEnabled: true,
+        isFoo: false,
+      },
+      key3: ['arrayValue1', 'arrayValue2'],
+    }
+
+    let params = {
+      accessSecret,
+      controller,
+      action,
+      payload   
+    }
+    let signedValues = acsignature.sign(params)
+
+    let options = {
+      controller,
+      action,
+      accessSecret,
+      hash: _.get(signedValues, 'hash'),
+      accessKey,
+      rts: _.get(signedValues, 'timestamp')
+    }
+    let result = acsignature.checkSignedPayload(payload2, options)
+    expect(result).toBeUndefined()
+    return done()
+  })
+
 })
