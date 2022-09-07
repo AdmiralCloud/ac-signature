@@ -2,7 +2,10 @@
   "name": "ac-signature",
   "description": "Sign payload for AdmiralCloud API",
   "version": "2.0.9",
-  "author": "Mark Poepping / support@admiralcloud.com",
+  "author": "Mark Poepping (https://www.admiralcloud.com)",
+  "contributors": [
+    "Julius Eckert (https://www.admiralcloud.com)"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/admiralcloud/ac-signature"
@@ -20,11 +23,11 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "ac-semantic-release": "^0.2.5",
-    "eslint": "^7.24.0",
-    "expect": "^26.4.0",
-    "mocha": "^8.3.2",
-    "mocha-junit-reporter": "^2.0.0",
+    "ac-semantic-release": "^0.3.3",
+    "eslint": "^7.32.0",
+    "expect": "^26.6.2",
+    "mocha": "^8.4.0",
+    "mocha-junit-reporter": "^2.0.2",
     "superagent": "^6.0.0"
   },
   "scripts": {
