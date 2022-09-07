@@ -10,6 +10,9 @@ lint-check:
 commit:
 	@node ./node_modules/ac-semantic-release/lib/commit.js
 
+test-release:
+	DEBUGMODE=true node ./node_modules/ac-semantic-release/lib/release.js
+
 release:
 	@node ./node_modules/ac-semantic-release/lib/release.js	--branch master
 
