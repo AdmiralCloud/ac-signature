@@ -1,3 +1,32 @@
+<a name="2.1.0"></a>
+ 
+# [2.1.0](https://github.com/mmpro/ac-signature/compare/v2.0.9..v2.1.0) (2022-09-07 11:28:09)
+
+
+### Feature
+
+* **App:** Version 2 works with path alone | MP | [4c33d521955451db35f78df3318940a9b73cda2c](https://github.com/mmpro/ac-signature/commit/4c33d521955451db35f78df3318940a9b73cda2c)    
+Instead of controller/action, the new version 2 only requires the path.  
+Related issues: [undefined/undefined#signature-format2](undefined/browse/signature-format2)
+### Chores
+
+* **App:** Added option for test release and removed vscode settings from git | MP | [913b4e5d26b2554e9fb5db94687b47f813f33032](https://github.com/mmpro/ac-signature/commit/913b4e5d26b2554e9fb5db94687b47f813f33032)    
+Added option for test release and removed vscode settings from git  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+* **App:** Version only wotks with Node 12 or above | MP | [b0de0c6a39c83fae675e3b2e2659e46abef4cdc5](https://github.com/mmpro/ac-signature/commit/b0de0c6a39c83fae675e3b2e2659e46abef4cdc5)    
+Version only wotks with Node 12 or above  
+Related issues: [undefined/undefined#signature-format2](undefined/browse/signature-format2)
+* **App:** Updated lint fix for multiple tests | MP | [7a8feb04f88f2a18287017b48bb8f5906036eaa8](https://github.com/mmpro/ac-signature/commit/7a8feb04f88f2a18287017b48bb8f5906036eaa8)    
+Updated lint fix for multiple tests  
+Related issues: [undefined/undefined#signature-format2](undefined/browse/signature-format2)
+### Chores
+
+* **App:** Updated packages | MP | [5ef884901b7ebf67073ad196c38206341ff1538c](https://github.com/mmpro/ac-signature/commit/5ef884901b7ebf67073ad196c38206341ff1538c)    
+Updated packages  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+* **App:** Updated packages | MP | [52fff6c61d40da140e9cf76bb5664abb23481363](https://github.com/mmpro/ac-signature/commit/52fff6c61d40da140e9cf76bb5664abb23481363)    
+Updated packages  
+Related issues: [undefined/undefined#signature-format2](undefined/browse/signature-format2)
 <a name="2.0.9"></a>
 
 ## [2.0.9](https://github.com/mmpro/ac-signature/compare/v2.0.8..v2.0.9) (2021-04-15 18:09:40)
