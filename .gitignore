@@ -14,8 +14,10 @@ npm-debug.log
 **/.netbeans/**
 **/.idea/**
 **/tmp/**
+**/.vscode/**
 
 **report.xml**
 **config.js**
 **/demo/**
 createSig.js
+!prettier.config.js
