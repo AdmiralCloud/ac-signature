@@ -19,9 +19,7 @@ const acSignature = () => {
     if (!accessSecret) return 'accessSecretMissing'
     // accessKey only required for debugging
     const accessKey = _.get(params, 'accessKey') // only for debugging
-
     const data = _.isObject(params.payload) && params.payload || {}
-    //if (!data) return 'payloadMustBeObject'
 
     // for debugging you can use your own timestamp
     const ts = _.get(params, 'ts', parseInt(new Date().getTime()/1000))
@@ -56,13 +54,7 @@ const acSignature = () => {
     }
 
     // make sure payload keys are ordered from A-Z!
-    const keys = _.sortBy(_.keys(data), key => {
-      return key
-    })
-    const payload = {}
-    _.each(keys, key => {
-      payload[key] = data[key]
-    })
+    const payload = deepSortObjectKeys(data);
 
     valueToHash += '\n' + ts + (_.isEmpty(payload) ? '' : '\n'+JSON.stringify(payload))
     const mechanism = crypto.createHmac('sha256',accessSecret)
@@ -129,13 +121,7 @@ const acSignature = () => {
     }
 
     // make sure payload keys are ordered from A-Z!
-    let keys = _.sortBy(_.keys(params), key => {
-      return key
-    })
-    let payload = {}
-    _.forEach(keys, key => {
-      payload[key] = params[key]
-    })
+    const payload = deepSortObjectKeys(params);
 
     // Check payload against hash ] Hash is calculated
     const valueToHash = (path ? _.toLower(path) : (controller + '\n' + action)) + '\n' + ts + (_.isEmpty(payload) ? '' : '\n' + JSON.stringify(payload))
@@ -179,3 +165,24 @@ const acSignature = () => {
 
 }
 module.exports = acSignature()
+
+
+function deepSortObjectKeys(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map((item) => deepSortObjectKeys(item));
+  }
+
+  if (isObject(obj)) {
+    let out = {};
+    Object.keys(obj).sort((a, b) => a.localeCompare(b)).forEach(function (key) {
+      out[key] = deepSortObjectKeys(obj[key]);
+    });
+    return out;
+  }
+
+  return obj;
+
+  function isObject(o) {
+    return Object.prototype.toString.call(o) === '[object Object]';
+  }
+}
