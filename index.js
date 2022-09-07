@@ -1,46 +1,76 @@
 /**
- * Copyright mmpro film- und medienproduktion GmbH and other Node contributors
- *
+ * Copyright AdmiralCloud AG - www.admiralcloud.com
  */
 
-const crypto = require('crypto');
-const _ = require('lodash');
+const crypto = require('crypto')
+const _ = require('lodash')
 
 const acSignature = () => {
 
-  const sign = (params) => {
-    const accessSecret = params.accessSecret;
-    if (!accessSecret) return 'accessSecretMissing';
-    const controller = params.controller;
-    if (!controller) return 'controllerMissing';
-    const action = params.action;
-    if (!action) return 'actionMissing';
-    const data = _.isObject(params.payload) && params.payload;
-    if (!data) return 'payloadMustBeObject';
-    // debugging
+  const debugPrefix = _.padEnd('ACSignature', 14)
+  const debugPadding = 20
+
+  const sign2 = (params) => {
+    return sign(params, { version: 2 })
+  }
+
+  const sign = (params, options) => {
+    const accessSecret = params.accessSecret
+    if (!accessSecret) return 'accessSecretMissing'
+    // accessKey only required for debugging
     const accessKey = _.get(params, 'accessKey') // only for debugging
 
-    // make sure payload keys are ordered from A-Z!
-    const keys = _.sortBy(_.keys(data), key => {
-      return key;
-    });
-    const payload = {};
-    _.each(keys, key => {
-      payload[key] = data[key];
-    });
+    const data = _.isObject(params.payload) && params.payload || {}
+    //if (!data) return 'payloadMustBeObject'
 
     // for debugging you can use your own timestamp
     const ts = _.get(params, 'ts', parseInt(new Date().getTime()/1000))
-    const valueToHash = _.toLower(controller) + '\n' + _.toLower(action) + '\n' + ts + (_.isEmpty(payload) ? '' : '\n'+JSON.stringify(payload));
-    const mechanism = crypto.createHmac('sha256',accessSecret);
-    const hash = mechanism.update(valueToHash).digest("hex");
 
-    if (params.debug) {
-      const debugPrefix = _.padEnd('ACSignature', 14)
-      const debugPadding = 20
-      console.log(_.pad('Create Signature', 80, '-'))
+    const debugMode = _.get(params, 'debug')
+ 
+    const version = _.get(options, 'version', 1)
+    if (debugMode) {
+      console.log(_.pad(`Create Signature V${version}`, 80, '-'))
       if (accessKey) console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
-      console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
+    }
+
+    let valueToHash
+    if (version === 2) {
+      // version 2 with path only
+      const path = params.path
+      valueToHash = _.toLower(path)
+      if (debugMode) {
+        console.log('%s | %s | %s', debugPrefix, _.padEnd('Path', debugPadding), path)
+      }
+    }
+    else {
+      // version 1 with controller/action
+      const controller = params.controller
+      if (!controller) return 'controllerMissing'
+      const action = params.action
+      if (!action) return 'actionMissing'  
+      valueToHash = _.toLower(controller) + '\n' + _.toLower(action)
+      if (debugMode) {
+        console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
+      }
+    }
+
+    // make sure payload keys are ordered from A-Z!
+    const keys = _.sortBy(_.keys(data), key => {
+      return key
+    })
+    const payload = {}
+    _.each(keys, key => {
+      payload[key] = data[key]
+    })
+
+    valueToHash += '\n' + ts + (_.isEmpty(payload) ? '' : '\n'+JSON.stringify(payload))
+    const mechanism = crypto.createHmac('sha256',accessSecret)
+    const hash = mechanism.update(valueToHash).digest("hex")
+
+
+
+    if (debugMode) {
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload length', debugPadding), valueToHash.length)
       console.log('%s | %s | %s %s', debugPrefix, _.padEnd('TS type', debugPadding), typeof ts, ts)
@@ -59,6 +89,8 @@ const acSignature = () => {
    * Options are req.headers, accessSecret and optional other options
    */
   const checkSignedPayload = (params, options) => {
+    const path = _.get(options, 'path')
+    const version = _.get(options, 'version', (_.isString(path) ? 2 : 1))
     const headers = _.get(options, 'headers')
     const method = _.get(options, 'method')
     const controller = _.toLower(_.get(options, 'controller'))
@@ -82,7 +114,7 @@ const acSignature = () => {
       const min = new Date().getTime()/1000 - deviation
       const max = new Date().getTime()/1000 + deviation
       if (ts < min || ts > max) {
-        let error = { message: errorPrefix + '_rtsDeviation', status: 401, additionalInfo: { ts, deviation} }
+        let error = { message: errorPrefix + '_rtsDeviation', status: 401, additionalInfo: { ts, deviation } }
         return error
       }
     } 
@@ -106,21 +138,31 @@ const acSignature = () => {
     })
 
     // Check payload against hash ] Hash is calculated
-    const valueToHash = controller + '\n' + action + '\n' + ts + (_.isEmpty(payload) ? '' : '\n' + JSON.stringify(payload))
+    const valueToHash = (path ? _.toLower(path) : (controller + '\n' + action)) + '\n' + ts + (_.isEmpty(payload) ? '' : '\n' + JSON.stringify(payload))
     const mechanism = crypto.createHmac('sha256', accessSecret)
     const calculatedHash = mechanism.update(valueToHash).digest('hex')
 
     if (debugSignature || calculatedHash !== hash) {
-      const debugPrefix = _.padEnd('ACSignature', 14)
-      const debugPadding = 20
-      console.log(_.pad('Check Signature', 80, '-'))
-      console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
-      console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
+      console.log(_.pad(`Check Signature V${version}`, 80, '-'))
+      if (accessKey) {
+        console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
+      }
+      if (version === 2) {
+        // v2 with path
+        console.log('%s | %s | %s', debugPrefix, _.padEnd('Path', debugPadding), path)
+      }
+      else {
+        // v1 with controller/action
+        console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
+      }
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload length', debugPadding), valueToHash.length)
       console.log('%s | %s | %s %s', debugPrefix, _.padEnd('TS type', debugPadding), typeof ts, ts)
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Expected hash', debugPadding), calculatedHash)
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Sent hash', debugPadding), hash)
+      let result = '\x1b[32m\u2714\x1b[0m OK' // OK
+      if (calculatedHash !== hash) result = '\x1b[31m\u274C\x1b[0m FAILED'
+      console.log('%s | %s | %s', debugPrefix, _.padEnd('Result', debugPadding), result)
       console.log(_.repeat('-', 80))
     }
 
@@ -131,6 +173,7 @@ const acSignature = () => {
 
   return {
     sign,
+    sign2,
     checkSignedPayload
   }
 

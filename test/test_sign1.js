@@ -2,7 +2,7 @@ const expect = require('expect')
 const acsignature = require('../index')
 const _ = require('lodash')
 
-describe('Test signature', function () {
+describe('Test signature format v1', function () {
   const accessKey = Math.random().toString('36')
   const accessSecret = Math.random().toString('36')
 
@@ -65,16 +65,25 @@ describe('Test signature', function () {
       payload   
     }
     let signedValues = acsignature.sign(params)
+    const timestamp = Date.now()/1000+100;
     let options = {
       controller,
       action,
       accessSecret,
       hash: _.get(signedValues, 'hash'),
       accessKey,
-      rts: Date.now()/1000+100
+      rts: timestamp,
     }
     let result = acsignature.checkSignedPayload(payload, options)
-    expect(result).toEqual({ "message": "acsignature_rtsDeviation", "status": 401 })
+    expect(result).toEqual({
+      message: 'acsignature_rtsDeviation',
+      status: 401,
+
+      additionalInfo: {
+        deviation: 10,
+        ts: Math.floor(timestamp),
+      },
+    });
     return done()
   })
 
