@@ -21,20 +21,127 @@ You need to provide the following parameters for this function:
 accessSecret
 AccessKey and AccessSecret for your user in AdmiralCloud. Please contact support@admiralcloud.com for this information.
 
+payload
+The actual payload you want to send to the API. Send an empty object in case you have no payload (e.g. GET requests)
+
+When using signature version 2 (recommended), you only need the path. When working with version 1, you need controller and action (see below). Please note that signature version has nothing to do with the package version of ac-signature.
+
 controller
 The controller you are requesting. Please see API documentation
 
 action
 The action you are requesting. Please see API documentation.
 
-payload
-The actual payload you want to send to the API.
-
-# Examples
+# Examples Version 2 (recommended)
 For the following examples, we assume, that your accessKey "AKAC12344321" and you accessSecret is "my-very-good-accessSecret".
 
 
-## Sign a request
+## Sign a request (version 2)
+```
+// Example 1: Retrieve information about user 123
+// Token based request would be GET /user/123
+
+const acsignature = require('ac-signature');
+
+const params = {
+  accessSecret: 'my-very-good-accessSecret',
+  path: '/v5/user/123'
+}
+
+const signedValues = acsignature.sign2(params)
+// or
+const signedValues = acsignature.sign(params, { version: 2 })
+
+
+// The request then should look like this (using superagent - yarn add superagent - for the request)
+const request = require('superagent')
+
+request
+  .get('https://api.admiralcloud.com/v5/user/123')
+  .set({
+    'x-admiralcloud-accesskey': 'AKAC12344321',
+    'x-admiralcloud-rts':       signedValues.timestamp,
+    'x-admiralcloud-hash':      signedValues.hash,
+  })
+  .on('error', function(err) {
+  .end((err, res) => {
+    // res.body contains the response object
+  });
+
+```
+
+```
+// Example 2: Search request
+// Token based request would be POST /search?token=xxx
+
+const acsignature = require('ac-signature');
+
+const params = {
+  accessSecret: 'my-very-good-accessSecret',
+  path: '/v5/search',
+  payload: {
+    "searchTerm": "My search term"
+  }
+
+const signedValues = acsignature.sign2(params)
+// or
+const signedValues = acsignature.sign(params, { version: 2 })
+
+
+// The request then should look like this (using superagent - yarn add superagent - for the request)
+const request = require('superagent')
+
+request
+  .post('https://api.admiralcloud.com/v5/search')
+  .send(params.payload)
+  .set({
+    'x-admiralcloud-accesskey': 'AKAC12344321',
+    'x-admiralcloud-rts':       signedValues.timestamp,
+    'x-admiralcloud-hash':      signedValues.hash,
+  })
+  .on('error', function(err) {
+  .end((err, res) => {
+    // res.body contains the response object
+  });
+
+```
+
+## Check a hashed request (version 2)
+If you want to check an incoming request, you can now also use this class.
+
+```
+// Example: check hashed payload
+const acsignature = require('ac-signature');
+
+// this is the request payload (make sure to have all parameters from body, URL, etc in one object)
+let payload = {
+  searchTerm: "My search term"
+}
+
+// headers from request
+let headers = {
+  'x-admiralcloud-accesskey': 'AKAC12344321',
+  'x-admiralcloud-rts':       1572628136,
+  'x-admiralcloud-hash':      'ab124fjagd...xxxx',
+  'x-admiralcloud-debugsignature': true // optional
+}
+
+let options = {
+  headers, 
+  path: '/v5/search',
+  accessSecret: 'my-very-good-accessSecret'
+}
+
+let result = acsignature.checkSignedPayload(payload, options)
+// -> result is empty if payload is ok, otherwise result contains an error message
+```
+
+
+# Examples V1 (deprecated)
+For the following examples, we assume, that your accessKey "AKAC12344321" and you accessSecret is "my-very-good-accessSecret".
+
+
+## Sign a request V1 (deprecated)
 ```
 // Example 1: Retrieve information about user 123
 // Token based request would be GET /user/123?token=xxx
