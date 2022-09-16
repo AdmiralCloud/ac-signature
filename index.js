@@ -20,22 +20,35 @@ const acSignature = () => {
     // accessKey only required for debugging
     const accessKey = _.get(params, 'accessKey') // only for debugging
     const data = _.isObject(params.payload) && params.payload || {}
+    const path = _.get(params, 'path')
 
     // for debugging you can use your own timestamp
     const ts = _.get(params, 'ts', parseInt(new Date().getTime()/1000))
-
     const debugMode = _.get(params, 'debug')
- 
     const version = _.get(options, 'version', 1)
+    
     if (debugMode) {
       console.log(_.pad(`Create Signature V${version}`, 80, '-'))
       if (accessKey) console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
     }
-
+ 
+    let payload = {}
+    if (version < 3) {
+      // sort order fileName, filename
+      let keys = _.sortBy(_.keys(data), (key) => {
+        return key
+      })
+      _.each(keys ,(key) => {
+        payload[key] = data[key];
+      })
+    }
+    else {
+      payload = deepSortObjectKeys(data)
+    }
+    
     let valueToHash
-    if (version === 2) {
+    if (version >= 2 && path) {
       // version 2 with path only
-      const path = params.path
       valueToHash = _.toLower(path)
       if (debugMode) {
         console.log('%s | %s | %s', debugPrefix, _.padEnd('Path', debugPadding), path)
@@ -53,14 +66,9 @@ const acSignature = () => {
       }
     }
 
-    // make sure payload keys are ordered from A-Z!
-    const payload = deepSortObjectKeys(data);
-
     valueToHash += '\n' + ts + (_.isEmpty(payload) ? '' : '\n'+JSON.stringify(payload))
     const mechanism = crypto.createHmac('sha256',accessSecret)
     const hash = mechanism.update(valueToHash).digest("hex")
-
-
 
     if (debugMode) {
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
@@ -82,7 +90,6 @@ const acSignature = () => {
    */
   const checkSignedPayload = (params, options) => {
     const path = _.get(options, 'path')
-    const version = _.get(options, 'version', (_.isString(path) ? 2 : 1))
     const headers = _.get(options, 'headers')
     const method = _.get(options, 'method')
     const controller = _.toLower(_.get(options, 'controller'))
@@ -94,6 +101,8 @@ const acSignature = () => {
     const hash =  _.get(options, 'hash', _.get(headers, 'x-admiralcloud-hash'))
     const accessKey =  _.get(options, 'accessKey', _.get(headers, 'x-admiralcloud-accesskey'))
     const ts = parseInt( _.get(options, 'rts', _.get(headers, 'x-admiralcloud-rts')))
+    const version = parseInt(_.get(options, 'version', _.get(headers, 'x-admiralcloud-version', (_.isString(path) ? 2 : 1))))
+
     const debugSignature =   _.get(options, 'debugSignature', _.get(headers, 'x-admiralcloud-debugsignature'))
     const errorPrefix = _.get(options, 'errorPrefix', 'acsignature')
 
@@ -121,10 +130,28 @@ const acSignature = () => {
     }
 
     // make sure payload keys are ordered from A-Z!
-    const payload = deepSortObjectKeys(params);
+    let payload = {}
+    if (version < 3) {
+      // sort order fileName, filename
+      let keys = _.sortBy(_.keys(params), (key) => {
+        return key;
+      })
+      _.each(keys, (key) => {
+        payload[key] = params[key];
+      })
+    }
+    else {
+      // sort order filename, fileName
+      payload = deepSortObjectKeys(params)
+    }
 
+    let valueToHash = controller + '\n' + action
+    if (version >= 2 && path) {
+      valueToHash = _.toLower(path)
+    }
+    
     // Check payload against hash ] Hash is calculated
-    const valueToHash = (path ? _.toLower(path) : (controller + '\n' + action)) + '\n' + ts + (_.isEmpty(payload) ? '' : '\n' + JSON.stringify(payload))
+    valueToHash += '\n' + ts + (_.isEmpty(payload) ? '' : '\n' + JSON.stringify(payload))
     const mechanism = crypto.createHmac('sha256', accessSecret)
     const calculatedHash = mechanism.update(valueToHash).digest('hex')
 

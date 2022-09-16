@@ -117,10 +117,10 @@ describe('Test signature format v1', function () {
     return done()
   })
 
-  it('Check with nested payload', (done) => {
+  it('Check with nested payload and controller/action', (done) => {
     let payload = {
       key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{tagId: 123, flag: 0}, {tagId: 124, flag: 1}, null, {}]},
+      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
       key4: {
         isFoo: false,
         isEnabled: true
@@ -129,7 +129,7 @@ describe('Test signature format v1', function () {
     }
     let payload2 = { // == payload (but nested keys are reordered)
       key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{flag: 0, tagId: 123}, {flag: 1, tagId: 124}, null, {}]},
+      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
       key4: {
         isEnabled: true,
         isFoo: false,
@@ -141,9 +141,9 @@ describe('Test signature format v1', function () {
       accessSecret,
       controller,
       action,
-      payload   
+      payload,
     }
-    let signedValues = acsignature.sign(params)
+    let signedValues = acsignature.sign(params, { version: 3 })
 
     let options = {
       controller,
@@ -151,7 +151,92 @@ describe('Test signature format v1', function () {
       accessSecret,
       hash: _.get(signedValues, 'hash'),
       accessKey,
-      rts: _.get(signedValues, 'timestamp')
+      rts: _.get(signedValues, 'timestamp'),
+      version: 3
+    }
+    let result = acsignature.checkSignedPayload(payload2, options)
+    expect(result).toBeUndefined()
+    return done()
+  })
+
+  it('Check with nested payload and path', (done) => {
+    let payload = {
+      key2: 'is a string',
+      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
+      key4: {
+        isFoo: false,
+        isEnabled: true
+      },
+      key3: ['arrayValue1', 'arrayValue2'],
+    }
+    let payload2 = { // == payload (but nested keys are reordered)
+      key2: 'is a string',
+      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
+      key4: {
+        isEnabled: true,
+        isFoo: false,
+      },
+      key3: ['arrayValue1', 'arrayValue2'],
+    }
+
+    let params = {
+      accessSecret,
+      path: '/v1/apiendpoint',
+      payload,
+    }
+    let signedValues = acsignature.sign(params, { version: 3 })
+
+    let options = {
+      path: '/v1/apiendpoint',
+      accessSecret,
+      hash: _.get(signedValues, 'hash'),
+      accessKey,
+      rts: _.get(signedValues, 'timestamp'),
+      version: 3
+    }
+    let result = acsignature.checkSignedPayload(payload2, options)
+    expect(result).toBeUndefined()
+    return done()
+  })
+
+  it('Check with nested payload containing same prop with different chars and path', (done) => {
+    let payload = {
+      filename: 'filename in small letters',
+      fileName: 'filename in uppercas letters',
+      key2: 'is a string',
+      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
+      key4: {
+        isFoo: false,
+        isEnabled: true
+      },
+      key3: ['arrayValue1', 'arrayValue2'],
+    }
+    let payload2 = { // == payload (but nested keys are reordered)
+      fileName: 'filename in uppercas letters',
+      filename: 'filename in small letters',
+      key2: 'is a string',
+      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
+      key4: {
+        isEnabled: true,
+        isFoo: false,
+      },
+      key3: ['arrayValue1', 'arrayValue2'],
+    }
+
+    let params = {
+      accessSecret,
+      path: '/v1/apiendpoint',
+      payload,
+    }
+    let signedValues = acsignature.sign(params, { version: 3 })
+
+    let options = {
+      path: '/v1/apiendpoint',
+      accessSecret,
+      hash: _.get(signedValues, 'hash'),
+      accessKey,
+      rts: _.get(signedValues, 'timestamp'),
+      version: 3
     }
     let result = acsignature.checkSignedPayload(payload2, options)
     expect(result).toBeUndefined()

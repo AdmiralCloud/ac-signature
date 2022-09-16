@@ -5,9 +5,10 @@ https://www.admiralcloud.com
 
 Please note, that every signed payload is only valid for 10 seconds by default. The same is true for time deviation (+/- 10 seconds), so make sure your computer's time is in sync/valid. You can set the deviation with a custom value using options
 
-### Breaking changes version 2
-Version 2 now has the function to sign the payload as well as to check the payload. So instead of acsignature(...) use acsignature.sign(...)
+### Breaking changes version 2.x
+Starting with version 2 (package.json) now has the function to sign the payload as well as to check the payload. So instead of acsignature(...) use acsignature.sign(...)
 
+Please do not confuse package version 2 with signature version 2!
 
 ## Usage
 
@@ -32,11 +33,22 @@ The controller you are requesting. Please see API documentation
 action
 The action you are requesting. Please see API documentation.
 
-# Examples Version 2 (recommended)
+path
+Use the path instead of controller/action. You have to use signature version 2. 
+
+# Signature versions
+First of all: Please do not confuse package version 2 with signature version 2!
+
+Signature version 1 uses controller and action while signature version 2 and higher uses path. Signature version 3 fixes and issue with deep nested objects but has a breaking change in sorting the keys (which affects the hash).
+Different signature versions are NOT compatible. Please make sure you use the same one on both sides!
+
+You can tell the decoder (our API) which version to use by sending header x-admiralcloud-version
+
+# Examples signature version 3 (recommended)
 For the following examples, we assume, that your accessKey "AKAC12344321" and you accessSecret is "my-very-good-accessSecret".
 
 
-## Sign a request (version 2)
+## Sign a request (signature version 3, not version of this app)
 ```
 // Example 1: Retrieve information about user 123
 // Token based request would be GET /user/123
@@ -48,9 +60,7 @@ const params = {
   path: '/v5/user/123'
 }
 
-const signedValues = acsignature.sign2(params)
-// or
-const signedValues = acsignature.sign(params, { version: 2 })
+const signedValues = acsignature.sign(params, { version: 3 })
 
 
 // The request then should look like this (using superagent - yarn add superagent - for the request)
@@ -62,6 +72,7 @@ request
     'x-admiralcloud-accesskey': 'AKAC12344321',
     'x-admiralcloud-rts':       signedValues.timestamp,
     'x-admiralcloud-hash':      signedValues.hash,
+    'x-admiralcloud-version':   3
   })
   .on('error', function(err) {
   .end((err, res) => {
@@ -83,9 +94,7 @@ const params = {
     "searchTerm": "My search term"
   }
 
-const signedValues = acsignature.sign2(params)
-// or
-const signedValues = acsignature.sign(params, { version: 2 })
+const signedValues = acsignature.sign(params, { version: 3 })
 
 
 // The request then should look like this (using superagent - yarn add superagent - for the request)
@@ -98,6 +107,7 @@ request
     'x-admiralcloud-accesskey': 'AKAC12344321',
     'x-admiralcloud-rts':       signedValues.timestamp,
     'x-admiralcloud-hash':      signedValues.hash,
+    'x-admiralcloud-version':   3
   })
   .on('error', function(err) {
   .end((err, res) => {
@@ -123,6 +133,7 @@ let headers = {
   'x-admiralcloud-accesskey': 'AKAC12344321',
   'x-admiralcloud-rts':       1572628136,
   'x-admiralcloud-hash':      'ab124fjagd...xxxx',
+  'x-admiralcloud-version':   3 // optional, but recommended - required if you signed with version 3
   'x-admiralcloud-debugsignature': true // optional
 }
 
