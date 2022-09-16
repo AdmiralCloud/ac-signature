@@ -1,3 +1,18 @@
+<a name="2.1.1"></a>
+
+## [2.1.1](https://github.com/mmpro/ac-signature/compare/v2.1.0..v2.1.1) (2022-09-16 11:24:38)
+
+
+### Bug Fix
+
+* **App:** Fixed an issue from version 2.1.0 | MP | [c69f278a153089480b76eb4946ba33d1385de8d7](https://github.com/mmpro/ac-signature/commit/c69f278a153089480b76eb4946ba33d1385de8d7)    
+2.1.0 sorted different that 2.0.9 and was therefore not backwards compatible. The new version fixes this by introducting version 3 signature.  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Chores
+
+* **App:** Updated packages | MP | [4d17cf4835a0a0179ed7ffed784ed2932dbd6d1c](https://github.com/mmpro/ac-signature/commit/4d17cf4835a0a0179ed7ffed784ed2932dbd6d1c)    
+Updated packages  
+Related issues: [undefined/undefined#master](undefined/browse/master)
 <a name="2.1.0"></a>
  
 # [2.1.0](https://github.com/mmpro/ac-signature/compare/v2.0.9..v2.1.0) (2022-09-07 11:28:09)
