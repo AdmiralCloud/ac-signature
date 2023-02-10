@@ -1,4 +1,4 @@
-const expect = require('expect')
+const { expect } = require('chai')
 const acsignature = require('../index')
 const _ = require('lodash')
 
@@ -29,7 +29,7 @@ describe('Test signature format v1', function () {
       rts: _.get(signedValues, 'timestamp')
     }
     let result = acsignature.checkSignedPayload(payload, options)
-    expect(result).toBeUndefined()
+    expect(result).to.be.undefined
     return done()
   })
 
@@ -51,7 +51,7 @@ describe('Test signature format v1', function () {
       rts: _.get(signedValues, 'timestamp')
     }
     let result = acsignature.checkSignedPayload(payload, options)
-    expect(result).toEqual({ "message": "acsignature_hashMismatch", "status": 401 })
+    expect(result).to.eql({ "message": "acsignature_hashMismatch", "status": 401 })
     return done()
   })
 
@@ -75,7 +75,7 @@ describe('Test signature format v1', function () {
       rts: timestamp,
     }
     let result = acsignature.checkSignedPayload(payload, options)
-    expect(result).toEqual({
+    expect(result).to.eql({
       message: 'acsignature_rtsDeviation',
       status: 401,
 
@@ -113,7 +113,7 @@ describe('Test signature format v1', function () {
       rts: _.get(signedValues, 'timestamp')
     }
     let result = acsignature.checkSignedPayload(payload, options)
-    expect(result).toBeUndefined()
+    expect(result).to.be.undefined
     return done()
   })
 
@@ -155,7 +155,7 @@ describe('Test signature format v1', function () {
       version: 3
     }
     let result = acsignature.checkSignedPayload(payload2, options)
-    expect(result).toBeUndefined()
+    expect(result).to.be.undefined
     return done()
   })
 
@@ -195,7 +195,7 @@ describe('Test signature format v1', function () {
       version: 3
     }
     let result = acsignature.checkSignedPayload(payload2, options)
-    expect(result).toBeUndefined()
+    expect(result).to.be.undefined
     return done()
   })
 
@@ -239,7 +239,7 @@ describe('Test signature format v1', function () {
       version: 3
     }
     let result = acsignature.checkSignedPayload(payload2, options)
-    expect(result).toBeUndefined()
+    expect(result).to.be.undefined
     return done()
   })
 
