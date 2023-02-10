@@ -1,3 +1,18 @@
+<a name="2.1.2"></a>
+
+## [2.1.2](https://github.com/mmpro/ac-signature/compare/v2.1.1..v2.1.2) (2023-02-10 09:16:37)
+
+
+### Bug Fix
+
+* **App:** Package updates | MP | [1588aa640aa888eaac359e77344ae220b8207ce1](https://github.com/mmpro/ac-signature/commit/1588aa640aa888eaac359e77344ae220b8207ce1)    
+Package updates incl change of test framework  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Documentation
+
+* **App:** Use IAM for examples with user endpoint | MP | [f084777671a624ad1ca092fc9988e4ab59d651d0](https://github.com/mmpro/ac-signature/commit/f084777671a624ad1ca092fc9988e4ab59d651d0)    
+Use IAM for examples with user endpoint  
+Related issues: [undefined/undefined#master](undefined/browse/master)
 <a name="2.1.1"></a>
 
 ## [2.1.1](https://github.com/mmpro/ac-signature/compare/v2.1.0..v2.1.1) (2022-09-16 11:24:38)
