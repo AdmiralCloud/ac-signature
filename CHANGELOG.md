@@ -1,3 +1,20 @@
+<a name="3.0.0"></a>
+ 
+# [3.0.0](https://github.com/mmpro/ac-signature/compare/v2.1.2..v3.0.0) (2023-02-10 09:21:24)
+
+
+### Bug Fix
+
+* **App:** Requires Node 16 | MP | [9c0dfcf2169f4d5326905378674a3a9aaa93e1ff](https://github.com/mmpro/ac-signature/commit/9c0dfcf2169f4d5326905378674a3a9aaa93e1ff)    
+Requires Node 16  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Chores
+
+* **App:** Updated automatic Github test | MP | [24b5ceb655b91f3771589ef19484f30dad06a351](https://github.com/mmpro/ac-signature/commit/24b5ceb655b91f3771589ef19484f30dad06a351)    
+Check Node 16 and 18  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+## BREAKING CHANGES
+* **App:** Requires Node 16 or higher
 <a name="2.1.2"></a>
 
 ## [2.1.2](https://github.com/mmpro/ac-signature/compare/v2.1.1..v2.1.2) (2023-02-10 09:16:37)
