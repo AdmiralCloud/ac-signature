@@ -21,12 +21,12 @@ describe('Test signature format v2', function () {
   });
 
   it('Check with GET param and no payload', (done) => {
-    let signedValues = acsignature.sign2({ accessSecret, path: '/v5/user/45345' });
+    let signedValues = acsignature.sign2({ accessSecret, path: '/v1/user/45345' });
 
     let result = acsignature.checkSignedPayload(
       {},
       {
-        path: '/v5/user/45345',
+        path: '/v1/user/45345',
         accessSecret,
         hash: signedValues.hash,
         rts: signedValues.timestamp,
@@ -101,7 +101,7 @@ describe('Test signature format v2', function () {
     let result = acsignature.checkSignedPayload(
       {},
       {
-        path: '/v5/user/3456',
+        path: '/v1/user/3456',
         accessSecret,
         hash: signedValues.hash,
         rts: signedValues.timestamp,

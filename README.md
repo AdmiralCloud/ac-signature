@@ -57,7 +57,7 @@ const acsignature = require('ac-signature');
 
 const params = {
   accessSecret: 'my-very-good-accessSecret',
-  path: '/v5/user/123'
+  path: '/v1/user/123'
 }
 
 const signedValues = acsignature.sign(params, { version: 3 })
@@ -67,7 +67,7 @@ const signedValues = acsignature.sign(params, { version: 3 })
 const request = require('superagent')
 
 request
-  .get('https://api.admiralcloud.com/v5/user/123')
+  .get('https://iam.admiralcloud.com/v1/user/123')
   .set({
     'x-admiralcloud-accesskey': 'AKAC12344321',
     'x-admiralcloud-rts':       signedValues.timestamp,
@@ -171,7 +171,7 @@ const signedValues = acsignature.sign(params)
 const request = require('superagent')
 
 request
-  .get('https://api.admiralcloud.com/v5/user/123')
+  .get('https://iam.admiralcloud.com/v1/user/123')
   .set({
     'x-admiralcloud-accesskey': 'AKAC12344321',
     'x-admiralcloud-rts':       signedValues.timestamp,
