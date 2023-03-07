@@ -1,11 +1,12 @@
 const { expect } = require('chai')
-const acsignature = require('../index');
+const acsignature = require('../index')
 
+// v2: path only + nested json bugs
 describe('Test signature format v2', function () {
   const accessSecret = Math.random().toString('36')
 
   it('Check with empty payload', (done) => {
-    let signedValues = acsignature.sign2({ accessSecret, path: '/v1/me' });
+    let signedValues = acsignature.sign({ accessSecret, path: '/v1/me' }, { version: 2 })
 
     let result = acsignature.checkSignedPayload(
       {},
@@ -13,15 +14,15 @@ describe('Test signature format v2', function () {
         path: '/v1/me',
         accessSecret,
         hash: signedValues.hash,
-        rts: signedValues.timestamp
+        rts: signedValues.timestamp,
       },
-    );
-    expect(result).to.be.undefined;
-    return done();
-  });
+    )
+    expect(result).to.be.undefined
+    return done()
+  })
 
   it('Check with GET param and no payload', (done) => {
-    let signedValues = acsignature.sign2({ accessSecret, path: '/v1/user/45345' });
+    let signedValues = acsignature.sign({ accessSecret, path: '/v1/user/45345' }, { version: 2 })
 
     let result = acsignature.checkSignedPayload(
       {},
@@ -31,14 +32,14 @@ describe('Test signature format v2', function () {
         hash: signedValues.hash,
         rts: signedValues.timestamp,
       },
-    );
+    )
 
-    expect(result).to.be.undefined;
-    return done();
-  });
+    expect(result).to.be.undefined
+    return done()
+  })
 
   it('Send wrong hash', (done) => {
-    let signedValues = acsignature.sign2({ accessSecret, path: '/v1/me' });
+    let signedValues = acsignature.sign({ accessSecret, path: '/v1/me' }, { version: 2 })
 
     let result = acsignature.checkSignedPayload(
       {},
@@ -48,15 +49,15 @@ describe('Test signature format v2', function () {
         hash: 'BADHASH',
         rts: signedValues.timestamp,
       },
-    );
-    expect(result).to.eql({ message: 'acsignature_hashMismatch', status: 401 });
-    return done();
-  });
+    )
+    expect(result).to.eql({ message: 'acsignature_hashMismatch', status: 401 })
+    return done()
+  })
 
   it('Error for wrong timestamp', (done) => {
-    let signedValues = acsignature.sign2({ accessSecret, path: '/v1/me' });
+    let signedValues = acsignature.sign({ accessSecret, path: '/v1/me' }, { version: 2 })
 
-    const timestamp = Date.now() / 1000 + 100;
+    const timestamp = Date.now() / 1000 + 100
     let result = acsignature.checkSignedPayload(
       {},
       {
@@ -65,7 +66,7 @@ describe('Test signature format v2', function () {
         hash: signedValues.hash,
         rts: timestamp,
       },
-    );
+    )
 
     expect(result).to.eql({
       message: 'acsignature_rtsDeviation',
@@ -75,12 +76,12 @@ describe('Test signature format v2', function () {
         deviation: 10,
         ts: Math.floor(timestamp),
       },
-    });
-    return done();
-  });
+    })
+    return done()
+  })
 
   it('Error with wrong accessSecret', (done) => {
-    let signedValues = acsignature.sign2({ accessSecret, path: '/v1/me' });
+    let signedValues = acsignature.sign({ accessSecret, path: '/v1/me' }, { version: 2 })
 
     let result = acsignature.checkSignedPayload(
       {},
@@ -90,13 +91,13 @@ describe('Test signature format v2', function () {
         hash: signedValues.hash,
         rts: signedValues.timestamp,
       },
-    );
-    expect(result).to.eql({ message: 'acsignature_hashMismatch', status: 401 });
-    return done();
-  });
+    )
+    expect(result).to.eql({ message: 'acsignature_hashMismatch', status: 401 })
+    return done()
+  })
 
   it('Error with wrong path', (done) => {
-    let signedValues = acsignature.sign2({ accessSecret, path: '/v1/me' });
+    let signedValues = acsignature.sign({ accessSecret, path: '/v1/me' }, { version: 2 })
 
     let result = acsignature.checkSignedPayload(
       {},
@@ -106,10 +107,10 @@ describe('Test signature format v2', function () {
         hash: signedValues.hash,
         rts: signedValues.timestamp,
       },
-    );
-    expect(result).to.eql({ message: 'acsignature_hashMismatch', status: 401 });
-    return done();
-  });
+    )
+    expect(result).to.eql({ message: 'acsignature_hashMismatch', status: 401 })
+    return done()
+  })
 
   it('Check with payload', (done) => {
     let payload = {
@@ -119,17 +120,16 @@ describe('Test signature format v2', function () {
       key4: {
         isEnabled: true,
       },
-    };
-    let signedValues = acsignature.sign2({ accessSecret, payload, path: '/v5/datastuff' });
+    }
+    let signedValues = acsignature.sign({ accessSecret, payload, path: '/v5/datastuff' }, { version: 2 })
 
     let result = acsignature.checkSignedPayload(payload, {
       path: '/v5/datastuff',
       accessSecret,
       hash: signedValues.hash,
       rts: signedValues.timestamp,
-    });
-    expect(result).to.be.undefined;
-    return done();
-  });
-  
-});
+    })
+    expect(result).to.be.undefined
+    return done()
+  })
+})
