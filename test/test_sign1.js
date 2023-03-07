@@ -2,6 +2,7 @@ const { expect } = require('chai')
 const acsignature = require('../index')
 const _ = require('lodash')
 
+// v1: controller/action + nested json bugs
 describe('Test signature format v1', function () {
   const accessKey = Math.random().toString('36')
   const accessSecret = Math.random().toString('36')
@@ -9,14 +10,13 @@ describe('Test signature format v1', function () {
   const controller = 'user'
   const action = 'mefind'
 
-
   it('Check with empty payload', (done) => {
     let payload = {}
     let params = {
       accessSecret,
       controller,
       action,
-      payload   
+      payload,
     }
     let signedValues = acsignature.sign(params)
 
@@ -26,7 +26,7 @@ describe('Test signature format v1', function () {
       accessSecret,
       hash: _.get(signedValues, 'hash'),
       accessKey,
-      rts: _.get(signedValues, 'timestamp')
+      rts: _.get(signedValues, 'timestamp'),
     }
     let result = acsignature.checkSignedPayload(payload, options)
     expect(result).to.be.undefined
@@ -39,7 +39,7 @@ describe('Test signature format v1', function () {
       accessSecret,
       controller,
       action,
-      payload   
+      payload,
     }
     let signedValues = acsignature.sign(params)
     let options = {
@@ -48,13 +48,12 @@ describe('Test signature format v1', function () {
       accessSecret,
       hash: 'ANBC',
       accessKey,
-      rts: _.get(signedValues, 'timestamp')
+      rts: _.get(signedValues, 'timestamp'),
     }
     let result = acsignature.checkSignedPayload(payload, options)
-    expect(result).to.eql({ "message": "acsignature_hashMismatch", "status": 401 })
+    expect(result).to.eql({ message: 'acsignature_hashMismatch', status: 401 })
     return done()
   })
-
 
   it('Send wrong timestamp', (done) => {
     let payload = {}
@@ -62,10 +61,10 @@ describe('Test signature format v1', function () {
       accessSecret,
       controller,
       action,
-      payload   
+      payload,
     }
     let signedValues = acsignature.sign(params)
-    const timestamp = Date.now()/1000+100;
+    const timestamp = Date.now() / 1000 + 100
     let options = {
       controller,
       action,
@@ -83,7 +82,7 @@ describe('Test signature format v1', function () {
         deviation: 10,
         ts: Math.floor(timestamp),
       },
-    });
+    })
     return done()
   })
 
@@ -93,14 +92,14 @@ describe('Test signature format v1', function () {
       key2: 'is a string',
       key3: ['arrayValue1', 'arrayValue2'],
       key4: {
-        isEnabled: true
-      }
+        isEnabled: true,
+      },
     }
     let params = {
       accessSecret,
       controller,
       action,
-      payload   
+      payload,
     }
     let signedValues = acsignature.sign(params)
 
@@ -110,137 +109,10 @@ describe('Test signature format v1', function () {
       accessSecret,
       hash: _.get(signedValues, 'hash'),
       accessKey,
-      rts: _.get(signedValues, 'timestamp')
+      rts: _.get(signedValues, 'timestamp'),
     }
     let result = acsignature.checkSignedPayload(payload, options)
     expect(result).to.be.undefined
     return done()
   })
-
-  it('Check with nested payload and controller/action', (done) => {
-    let payload = {
-      key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
-      key4: {
-        isFoo: false,
-        isEnabled: true
-      },
-      key3: ['arrayValue1', 'arrayValue2'],
-    }
-    let payload2 = { // == payload (but nested keys are reordered)
-      key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
-      key4: {
-        isEnabled: true,
-        isFoo: false,
-      },
-      key3: ['arrayValue1', 'arrayValue2'],
-    }
-
-    let params = {
-      accessSecret,
-      controller,
-      action,
-      payload,
-    }
-    let signedValues = acsignature.sign(params, { version: 3 })
-
-    let options = {
-      controller,
-      action,
-      accessSecret,
-      hash: _.get(signedValues, 'hash'),
-      accessKey,
-      rts: _.get(signedValues, 'timestamp'),
-      version: 3
-    }
-    let result = acsignature.checkSignedPayload(payload2, options)
-    expect(result).to.be.undefined
-    return done()
-  })
-
-  it('Check with nested payload and path', (done) => {
-    let payload = {
-      key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
-      key4: {
-        isFoo: false,
-        isEnabled: true
-      },
-      key3: ['arrayValue1', 'arrayValue2'],
-    }
-    let payload2 = { // == payload (but nested keys are reordered)
-      key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
-      key4: {
-        isEnabled: true,
-        isFoo: false,
-      },
-      key3: ['arrayValue1', 'arrayValue2'],
-    }
-
-    let params = {
-      accessSecret,
-      path: '/v1/apiendpoint',
-      payload,
-    }
-    let signedValues = acsignature.sign(params, { version: 3 })
-
-    let options = {
-      path: '/v1/apiendpoint',
-      accessSecret,
-      hash: _.get(signedValues, 'hash'),
-      accessKey,
-      rts: _.get(signedValues, 'timestamp'),
-      version: 3
-    }
-    let result = acsignature.checkSignedPayload(payload2, options)
-    expect(result).to.be.undefined
-    return done()
-  })
-
-  it('Check with nested payload containing same prop with different chars and path', (done) => {
-    let payload = {
-      filename: 'filename in small letters',
-      fileName: 'filename in uppercas letters',
-      key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
-      key4: {
-        isFoo: false,
-        isEnabled: true
-      },
-      key3: ['arrayValue1', 'arrayValue2'],
-    }
-    let payload2 = { // == payload (but nested keys are reordered)
-      fileName: 'filename in uppercas letters',
-      filename: 'filename in small letters',
-      key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
-      key4: {
-        isEnabled: true,
-        isFoo: false,
-      },
-      key3: ['arrayValue1', 'arrayValue2'],
-    }
-
-    let params = {
-      accessSecret,
-      path: '/v1/apiendpoint',
-      payload,
-    }
-    let signedValues = acsignature.sign(params, { version: 3 })
-
-    let options = {
-      path: '/v1/apiendpoint',
-      accessSecret,
-      hash: _.get(signedValues, 'hash'),
-      accessKey,
-      rts: _.get(signedValues, 'timestamp'),
-      version: 3
-    }
-    let result = acsignature.checkSignedPayload(payload2, options)
-    expect(result).to.be.undefined
-    return done()
-  })
-
 })
