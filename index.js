@@ -10,6 +10,10 @@ const acSignature = () => {
   const debugPrefix = _.padEnd('ACSignature', 14)
   const debugPadding = 20
 
+  const sign5 = (params) => {
+    return sign(params, { version: 5 })
+  }
+
   const sign2 = (params) => {
     return sign(params, { version: 2 })
   }
@@ -21,6 +25,7 @@ const acSignature = () => {
     const accessKey = _.get(params, 'accessKey') // only for debugging
     const data = _.isObject(params.payload) && params.payload || {}
     const path = _.get(params, 'path')
+    const identifier = _.get(params, 'identifier') // identifier header for requests "on behalf"
 
     // for debugging you can use your own timestamp
     const ts = _.get(params, 'ts', parseInt(new Date().getTime()/1000))
@@ -65,6 +70,8 @@ const acSignature = () => {
         console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
       }
     }
+    
+    if (version >= 5 && identifier) valueToHash += '\n' + identifier
 
     valueToHash += '\n' + ts + (_.isEmpty(payload) ? '' : '\n'+JSON.stringify(payload))
     const mechanism = crypto.createHmac('sha256',accessSecret)
@@ -101,6 +108,7 @@ const acSignature = () => {
     const hash =  _.get(options, 'hash', _.get(headers, 'x-admiralcloud-hash'))
     const accessKey =  _.get(options, 'accessKey', _.get(headers, 'x-admiralcloud-accesskey'))
     const ts = parseInt( _.get(options, 'rts', _.get(headers, 'x-admiralcloud-rts')))
+    const identifier = _.get(options, 'identifier', _.get(headers, 'x-admiralcloud-identifier'))
     const version = parseInt(_.get(options, 'version', _.get(headers, 'x-admiralcloud-version', (_.isString(path) ? 2 : 1))))
 
     const debugSignature =   _.get(options, 'debugSignature', _.get(headers, 'x-admiralcloud-debugsignature'))
@@ -149,6 +157,7 @@ const acSignature = () => {
     if (version >= 2 && path) {
       valueToHash = _.toLower(path)
     }
+    if (version >= 5 && identifier) valueToHash += '\n' + identifier
     
     // Check payload against hash ] Hash is calculated
     valueToHash += '\n' + ts + (_.isEmpty(payload) ? '' : '\n' + JSON.stringify(payload))
@@ -187,6 +196,7 @@ const acSignature = () => {
   return {
     sign,
     sign2,
+    sign5,
     checkSignedPayload
   }
 
