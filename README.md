@@ -25,7 +25,7 @@ AccessKey and AccessSecret for your user in AdmiralCloud. Please contact support
 payload
 The actual payload you want to send to the API. Send an empty object in case you have no payload (e.g. GET requests)
 
-When using signature version 2 (recommended), you only need the path. When working with version 1, you need controller and action (see below). Please note that signature version has nothing to do with the package version of ac-signature.
+When using signature version 5 (recommended), you only need the path. When working with version 1, you need controller and action (see below). Please note that signature version has nothing to do with the package version of ac-signature.
 
 controller
 The controller you are requesting. Please see API documentation
@@ -34,19 +34,64 @@ action
 The action you are requesting. Please see API documentation.
 
 path
-Use the path instead of controller/action. You have to use signature version 2. 
+Use the path instead of controller/action. You have to use signature version 2+. 
 
 # Signature versions
-First of all: Please do not confuse package version 2 with signature version 2!
+First of all: Please do not confuse package version (e.g. 2) with signature version (e.g.2)!
 
-Signature version 1 uses controller and action while signature version 2 and higher uses path. Signature version 3 fixes and issue with deep nested objects but has a breaking change in sorting the keys (which affects the hash).
+Signature version 1 uses controller and action while signature version 2 and higher uses path. Signature version 3 fixes an issue with deep nested objects but has a breaking change in sorting the keys (which affects the hash).
+
+Version 5 (recommended) is even more secure than version 3 when making calls with x-admiralcloud-identifier header.
+
 Different signature versions are NOT compatible. Please make sure you use the same one on both sides!
 
 You can tell the decoder (our API) which version to use by sending header x-admiralcloud-version
 
-# Examples signature version 3 (recommended)
+# Examples signature version 5 (recommended)
 For the following examples, we assume, that your accessKey "AKAC12344321" and you accessSecret is "my-very-good-accessSecret".
 
+```
+// Example 1: Search request
+// Token based request would be POST /search?token=xxx
+
+const acsignature = require('ac-signature');
+
+const params = {
+  accessSecret: 'my-very-good-accessSecret',
+  path: '/v5/search',
+  payload: {
+    "searchTerm": "My search term"
+  },
+  identifier: 'my-very-good-identifier'
+}
+
+const signedValues = acsignature.sign5(params)
+const signedValues = acsignature.sign(params, { version: 5 })
+
+
+// The request then should look like this (using superagent - yarn add superagent - for the request)
+const request = require('superagent')
+
+request
+  .post('https://api.admiralcloud.com/v5/search')
+  .send(params.payload)
+  .set({
+    'x-admiralcloud-accesskey': 'AKAC12344321',
+    'x-admiralcloud-rts':       signedValues.timestamp,
+    'x-admiralcloud-hash':      signedValues.hash,
+    'x-admiralcloud-version':   5,
+    'x-admiralcloud-identifier': 'my-very-good-identifier'
+  })
+  .on('error', function(err) {
+  .end((err, res) => {
+    // res.body contains the response object
+  });
+
+```
+
+
+# Examples signature version 3
+For the following examples, we assume, that your accessKey "AKAC12344321" and you accessSecret is "my-very-good-accessSecret".
 
 ## Sign a request (signature version 3, not version of this app)
 ```
@@ -258,8 +303,6 @@ deviation | number | Number in seconds, RTS/time deviation is allowed. If the ti
 
 # Links
 - [Website](https://www.admiralcloud.com/)
-- [Twitter (@admiralcloud)](https://twitter.com/admiralcloud)
-- [Facebook](https://www.facebook.com/MediaAssetManagement/)
 
 # Run tests
 ```
@@ -270,21 +313,23 @@ yarn run test
 |Stat|Value|
 |---|---|
 |Repository|ac-signature|
-|Date|Sun Dec 20 2020 15:15:34 GMT+0100 (GMT+01:00)|
-|Total|7|
-|Analyzed|7|
+|Date|Sat Jul 13 2024 16:26:38 GMT+0200 (Mitteleuropäische Sommerzeit)|
+|Total|8|
+|Analyzed|8|
 
 &nbsp;
 ### Licenses
 |License|Count|Percent|Info|
 |---|---|---|---|
-|MIT|7|100|https://choosealicense.com/licenses/mit/|
+|MIT|7|87.5|https://choosealicense.com/licenses/mit/|
+|ISC|1|12.5||
 
 &nbsp;
 ### Detailed Report
 |License|Packages|
 |---|---|
-|MIT|ac-semantic-release, eslint, expect, lodash, mocha, mocha-junit-reporter, superagent|
+|MIT|ac-semantic-release, chai, eslint, lodash, mocha, mocha-junit-reporter, superagent|
+|ISC|c8|
 
 ## License
 
