@@ -38,7 +38,7 @@
     "coverage": "./node_modules/c8/bin/c8.js yarn test"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "resolutions": {
     "braces": "^3.0.3"
