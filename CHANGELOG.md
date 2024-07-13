@@ -1,3 +1,18 @@
+<a name="3.1.0"></a>
+ 
+# [3.1.0](https://github.com/mmpro/ac-signature/compare/v3.0.0..v3.1.0) (2024-07-13 07:36:14)
+
+
+### Feature
+
+* **App:** Add option to use identifier as part of hash | MP | [bd20f511ac73e19c5d66c6471c948278eead009a](https://github.com/mmpro/ac-signature/commit/bd20f511ac73e19c5d66c6471c948278eead009a)    
+Some requests are made on behalf of users. To secure them, this information is added as part of the signed hash. Use signature version 5  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Chores
+
+* **App:** Updated packages | MP | [a40f24dd8125d7d3d6c44e693f0b037dae42f82e](https://github.com/mmpro/ac-signature/commit/a40f24dd8125d7d3d6c44e693f0b037dae42f82e)    
+Updated packages  
+Related issues: [undefined/undefined#master](undefined/browse/master)
 <a name="3.0.0"></a>
  
 # [3.0.0](https://github.com/mmpro/ac-signature/compare/v2.1.2..v3.0.0) (2023-02-10 09:21:24)
