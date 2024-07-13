@@ -1,3 +1,25 @@
+<a name="4.0.0"></a>
+ 
+# [4.0.0](https://github.com/mmpro/ac-signature/compare/v3.1.0..v4.0.0) (2024-07-13 14:31:41)
+
+
+### Bug Fix
+
+* **App:** Set min node version to 18 | MP | [2020d540418a19943d8976d7c381de3bf94b2272](https://github.com/mmpro/ac-signature/commit/2020d540418a19943d8976d7c381de3bf94b2272)    
+Set min node version to 18  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Documentation
+
+* **App:** Updated README | MP | [9616fd15c8978e28490fadcc6cf07b577cdb959e](https://github.com/mmpro/ac-signature/commit/9616fd15c8978e28490fadcc6cf07b577cdb959e)    
+Updated README  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Chores
+
+* **App:** Added coverage test | MP | [6d84e8340e9c202f96cc84b0ec3ddbf4c9838345](https://github.com/mmpro/ac-signature/commit/6d84e8340e9c202f96cc84b0ec3ddbf4c9838345)    
+Added coverage tests  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+## BREAKING CHANGES
+* **App:** Set min node version to 18
 <a name="3.1.0"></a>
  
 # [3.1.0](https://github.com/mmpro/ac-signature/compare/v3.0.0..v3.1.0) (2024-07-13 07:36:14)
