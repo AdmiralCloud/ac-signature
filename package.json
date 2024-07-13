@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "ac-semantic-release": "^0.4.2",
+    "c8": "^10.1.2",
     "chai": "^4.4.1",
     "eslint": "^9.7.0",
     "mocha": "^10.6.0",
@@ -33,7 +34,8 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --slow 1000 --colors ./test/*.js || :",
     "test-local": "env TESTMODE=true ./node_modules/.bin/mocha --bail --slow 1000 --colors ./test/*.js || :",
-    "test-jenkins": "JUNIT_REPORT_PATH=./report.xml mocha --bail --slow 1000 --colors --reporter-options junit_report_name='SIGNATURE'  || :"
+    "test-jenkins": "JUNIT_REPORT_PATH=./report.xml mocha --bail --slow 1000 --colors --reporter-options junit_report_name='SIGNATURE'  || :",
+    "coverage": "./node_modules/c8/bin/c8.js yarn test"
   },
   "engines": {
     "node": ">=16.0.0"
