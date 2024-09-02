@@ -1,3 +1,18 @@
+<a name="4.0.1"></a>
+
+## [4.0.1](https://github.com/mmpro/ac-signature/compare/v4.0.0..v4.0.1) (2024-09-02 18:24:34)
+
+
+### Bug Fix
+
+* **App:** Make sure path is just a path | MP | [a269a1747f9511ae6a35c9debbafc2558b20840b](https://github.com/mmpro/ac-signature/commit/a269a1747f9511ae6a35c9debbafc2558b20840b)    
+Do not consider query params added to path for signature.  
+Related issues: [undefined/undefined#master](undefined/browse/master)
+### Chores
+
+* **App:** Updated packages | MP | [3085beaaf3c6eac444c69ee4797f17615d743687](https://github.com/mmpro/ac-signature/commit/3085beaaf3c6eac444c69ee4797f17615d743687)    
+Updated packages  
+Related issues: [undefined/undefined#master](undefined/browse/master)
 <a name="4.0.0"></a>
  
 # [4.0.0](https://github.com/mmpro/ac-signature/compare/v3.1.0..v4.0.0) (2024-07-13 14:31:41)
