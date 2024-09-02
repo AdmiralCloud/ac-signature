@@ -24,7 +24,7 @@ const acSignature = () => {
     // accessKey only required for debugging
     const accessKey = _.get(params, 'accessKey') // only for debugging
     const data = _.isObject(params.payload) && params.payload || {}
-    const path = _.get(params, 'path')
+    const path = (_.get(params, 'path') || '').split('?')[0] // make sure the path is just the path - get rid of any query parameters
     const identifier = _.get(params, 'identifier') // identifier header for requests "on behalf"
 
     // for debugging you can use your own timestamp
