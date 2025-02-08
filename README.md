@@ -5,6 +5,8 @@ https://www.admiralcloud.com
 
 Please note, that every signed payload is only valid for 10 seconds by default. The same is true for time deviation (+/- 10 seconds), so make sure your computer's time is in sync/valid. You can set the deviation with a custom value using options
 
+For a PHP version please check https://github.com/AdmiralCloud/ac-signature-php
+
 ### Breaking changes version 2.x
 Starting with version 2 (package.json) now has the function to sign the payload as well as to check the payload. So instead of acsignature(...) use acsignature.sign(...)
 
@@ -52,7 +54,6 @@ For the following examples, we assume, that your accessKey "AKAC12344321" and yo
 
 ```
 // Example 1: Search request
-// Token based request would be POST /search?token=xxx
 
 const acsignature = require('ac-signature');
 
@@ -62,14 +63,17 @@ const params = {
   payload: {
     "searchTerm": "My search term"
   },
-  identifier: 'my-very-good-identifier'
+  identifier: 'my-very-good-identifier' // optional, only use this after consulting with our team
 }
 
+// create the signature
 const signedValues = acsignature.sign5(params)
+// OR
 const signedValues = acsignature.sign(params, { version: 5 })
 
 
-// The request then should look like this (using superagent - yarn add superagent - for the request)
+// The request then should look like this (using superagent (yarn add superagent) - for the request)
+
 const request = require('superagent')
 
 request
@@ -80,7 +84,7 @@ request
     'x-admiralcloud-rts':       signedValues.timestamp,
     'x-admiralcloud-hash':      signedValues.hash,
     'x-admiralcloud-version':   5,
-    'x-admiralcloud-identifier': 'my-very-good-identifier'
+    'x-admiralcloud-identifier': 'my-very-good-identifier' // only send it, if it was part of your signature above
   })
   .on('error', function(err) {
   .end((err, res) => {
@@ -91,6 +95,8 @@ request
 
 
 # Examples signature version 3
+We strongly recommend to use version 5 instead of version 3. It works identical.
+
 For the following examples, we assume, that your accessKey "AKAC12344321" and you accessSecret is "my-very-good-accessSecret".
 
 ## Sign a request (signature version 3, not version of this app)
@@ -162,7 +168,7 @@ request
 ```
 
 ## Check a hashed request (version 2)
-If you want to check an incoming request, you can now also use this class.
+This version is deprecated and will only be supported until 2025-12-31.
 
 ```
 // Example: check hashed payload
@@ -194,6 +200,8 @@ let result = acsignature.checkSignedPayload(payload, options)
 
 
 # Examples V1 (deprecated)
+This version is no longer supported. Please upgrade to a higher version immediately.
+
 For the following examples, we assume, that your accessKey "AKAC12344321" and you accessSecret is "my-very-good-accessSecret".
 
 
