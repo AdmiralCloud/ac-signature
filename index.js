@@ -10,6 +10,12 @@ const acSignature = () => {
   const debugPrefix = _.padEnd('ACSignature', 14)
   const debugPadding = 20
 
+  // Timing-safe hash comparison helper
+  const isHashEqual = (hash1, hash2) => {
+    if (hash1.length !== hash2.length) return false
+    return crypto.timingSafeEqual(Buffer.from(hash1, 'hex'), Buffer.from(hash2, 'hex'))
+  }
+
   const sign5 = (params) => {
     return sign(params, { version: 5 })
   }
@@ -44,7 +50,9 @@ const acSignature = () => {
         return key
       })
       _.each(keys ,(key) => {
-        payload[key] = data[key];
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+          payload[key] = data[key]
+        }
       })
     }
     else {
@@ -130,9 +138,9 @@ const acSignature = () => {
 
     // GET request send parameters as string instead of integer -> parse that here (see route.js for parameters)
     if (method === 'GET') {
-      for (let key in params) {
-        if (params[key] === parseInt(params[key], 10)) {
-          params[key] = parseInt(params[key])
+      for (const [key, value] of Object.entries(params)) {
+        if (value === parseInt(value, 10)) {
+          params[key] = parseInt(value)
         }
       }
     }
@@ -142,10 +150,12 @@ const acSignature = () => {
     if (version < 3) {
       // sort order fileName, filename
       let keys = _.sortBy(_.keys(params), (key) => {
-        return key;
+        return key
       })
       _.each(keys, (key) => {
-        payload[key] = params[key];
+        if (Object.prototype.hasOwnProperty.call(params, key)) {
+          payload[key] = params[key]
+        }
       })
     }
     else {
@@ -164,7 +174,7 @@ const acSignature = () => {
     const mechanism = crypto.createHmac('sha256', accessSecret)
     const calculatedHash = mechanism.update(valueToHash).digest('hex')
 
-    if (debugSignature || calculatedHash !== hash) {
+    if (debugSignature || !isHashEqual(calculatedHash, hash)) {
       console.log(_.pad(`Check Signature V${version}`, 80, '-'))
       if (accessKey) {
         console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
@@ -183,13 +193,16 @@ const acSignature = () => {
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Expected hash', debugPadding), calculatedHash)
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Sent hash', debugPadding), hash)
       let result = '\x1b[32m\u2714\x1b[0m OK' // OK
-      if (calculatedHash !== hash) result = '\x1b[31m\u274C\x1b[0m FAILED'
+      // avoid timing attacks
+      if (!isHashEqual(calculatedHash, hash)) {
+          result = '\x1b[31m\u274C\x1b[0m FAILED'
+      }
       console.log('%s | %s | %s', debugPrefix, _.padEnd('Result', debugPadding), result)
       console.log(_.repeat('-', 80))
     }
 
     let error
-    if (calculatedHash !== hash) error = { message: errorPrefix + '_hashMismatch', status: 401 }
+    if (!isHashEqual(calculatedHash, hash)) error = { message: errorPrefix + '_hashMismatch', status: 401 }
     return error
   }
 
@@ -203,23 +216,22 @@ const acSignature = () => {
 }
 module.exports = acSignature()
 
-
 function deepSortObjectKeys(obj) {
   if (Array.isArray(obj)) {
-    return obj.map((item) => deepSortObjectKeys(item));
+    return obj.map((item) => deepSortObjectKeys(item))
   }
 
   if (isObject(obj)) {
-    let out = {};
-    Object.keys(obj).sort((a, b) => a.localeCompare(b)).forEach(function (key) {
-      out[key] = deepSortObjectKeys(obj[key]);
-    });
-    return out;
+    let out = {}
+    Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)).forEach(([key, value]) => {
+      out[key] = deepSortObjectKeys(value)
+    })
+    return out
   }
 
-  return obj;
+  return obj
 
   function isObject(o) {
-    return Object.prototype.toString.call(o) === '[object Object]';
+    return Object.prototype.toString.call(o) === '[object Object]'
   }
 }
