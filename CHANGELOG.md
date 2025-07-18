@@ -1,4 +1,19 @@
 
+## [4.0.6](https://github.com/mmpro/ac-signature/compare/v4.0.5..v4.0.6) (2025-07-18 12:52:05)
+
+
+### Bug Fix
+
+* **App:** Improved code quality | MP | [1d3edddfa3d8228b1ded0e3236ca7c07608f1c77](https://github.com/mmpro/ac-signature/commit/1d3edddfa3d8228b1ded0e3236ca7c07608f1c77)    
+Improved code quality  
+Related issues:
+* **App:** Reduced code complexity | MP | [adc2c6390cbdb228fe8babbe6dfefad08b3aece4](https://github.com/mmpro/ac-signature/commit/adc2c6390cbdb228fe8babbe6dfefad08b3aece4)    
+Reduced code complexity  
+Related issues:
+* **App:** Further security fixes | MP | [4a78fa258e041b4c2c28d25787631e8544176084](https://github.com/mmpro/ac-signature/commit/4a78fa258e041b4c2c28d25787631e8544176084)    
+Fixed Generic Object Injection Sink  
+Related issues:
+
 ## [4.0.5](https://github.com/mmpro/ac-signature/compare/v4.0.4..v4.0.5) (2025-07-18 11:30:54)
 
 
