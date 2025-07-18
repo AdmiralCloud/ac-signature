@@ -43,16 +43,11 @@ const acSignature = () => {
       if (accessKey) console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
     }
  
-    let payload = {}
+    let payload = Object.create(null)
     if (version < 3) {
       // sort order fileName, filename
-      let keys = _.sortBy(_.keys(data), (key) => {
-        return key
-      })
-      _.each(keys ,(key) => {
-        if (Object.prototype.hasOwnProperty.call(data, key)) {
-          payload[key] = data[key]
-        }
+      Object.entries(data).sort(([a], [b]) => a.localeCompare(b)).forEach(([key, value]) => {
+        payload[key] = value
       })
     }
     else {
@@ -138,24 +133,24 @@ const acSignature = () => {
 
     // GET request send parameters as string instead of integer -> parse that here (see route.js for parameters)
     if (method === 'GET') {
+      const tempParams = Object.create(null)
       for (const [key, value] of Object.entries(params)) {
         if (value === parseInt(value, 10)) {
-          params[key] = parseInt(value)
+          tempParams[key] = parseInt(value)
+        }
+        else {
+          tempParams[key] = value
         }
       }
+      params = tempParams
     }
 
     // make sure payload keys are ordered from A-Z!
-    let payload = {}
+    let payload = Object.create(null)
     if (version < 3) {
       // sort order fileName, filename
-      let keys = _.sortBy(_.keys(params), (key) => {
-        return key
-      })
-      _.each(keys, (key) => {
-        if (Object.prototype.hasOwnProperty.call(params, key)) {
-          payload[key] = params[key]
-        }
+      Object.entries(params).sort(([a], [b]) => a.localeCompare(b)).forEach(([key, value]) => {
+        payload[key] = value
       })
     }
     else {
@@ -222,7 +217,7 @@ function deepSortObjectKeys(obj) {
   }
 
   if (isObject(obj)) {
-    let out = {}
+    let out = Object.create(null)
     Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)).forEach(([key, value]) => {
       out[key] = deepSortObjectKeys(value)
     })
