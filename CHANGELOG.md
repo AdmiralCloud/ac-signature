@@ -1,4 +1,16 @@
 
+## [4.0.5](https://github.com/mmpro/ac-signature/compare/v4.0.4..v4.0.5) (2025-07-18 11:30:54)
+
+
+### Bug Fix
+
+* **App:** Fixed security issues | MP | [bac19d3005c561d34d5e7f9dcd69805d96b2fdd7](https://github.com/mmpro/ac-signature/commit/bac19d3005c561d34d5e7f9dcd69805d96b2fdd7)    
+Improved hash comparison to avoid timing attacks, fixed Generic Object Injection Sinks  
+Related issues:
+* **App:** Package updates | MP | [cd2315d95816b809b61561c407db86342de64562](https://github.com/mmpro/ac-signature/commit/cd2315d95816b809b61561c407db86342de64562)    
+Package updates  
+Related issues:
+
 ## [4.0.4](https://github.com/mmpro/ac-signature/compare/v4.0.3..v4.0.4) (2025-04-20 06:18:29)
 
 
