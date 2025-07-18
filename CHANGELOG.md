@@ -1,4 +1,13 @@
 
+## [4.0.7](https://github.com/mmpro/ac-signature/compare/v4.0.6..v4.0.7) (2025-07-18 18:33:12)
+
+
+### Bug Fix
+
+* **App:** Fixed legacy support for signature version 1 and 2 | MP | [86aa6f2a7f93e09574d50a34da5683ab1b6f784a](https://github.com/mmpro/ac-signature/commit/86aa6f2a7f93e09574d50a34da5683ab1b6f784a)    
+Fixed legacy support for signature version 1 and 2  
+Related issues:
+
 ## [4.0.6](https://github.com/mmpro/ac-signature/compare/v4.0.5..v4.0.6) (2025-07-18 12:52:05)
 
 
