@@ -1,0 +1,14 @@
+engines:
+  eslint:
+    enabled: true
+    environment:
+      - node
+      - commonjs
+    global_variables:
+      - require
+      - module
+      - exports
+      - _
+exclude_patterns:
+  - "node_modules/**"
+  - "*.min.js"
