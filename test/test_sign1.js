@@ -127,14 +127,16 @@ describe('Test signature format v1', function () {
       },
       key3: ['arrayValue1', 'arrayValue2'],
     }
-    let payload2 = { // == payload (but nested keys are reordered)
+
+    // == payload will be ordered on top level only
+    let payload2 = { 
+      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
       key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
-      key4: {
-        isEnabled: true,
-        isFoo: false,
-      },
       key3: ['arrayValue1', 'arrayValue2'],
+      key4: {
+        isFoo: false,
+        isEnabled: true,
+      },
     }
 
     let params = {
@@ -143,7 +145,7 @@ describe('Test signature format v1', function () {
       action,
       payload,
     }
-    let signedValues = acsignature.sign(params, { version: 3 })
+    let signedValues = acsignature.sign(params)
 
     let options = {
       controller,
@@ -151,15 +153,14 @@ describe('Test signature format v1', function () {
       accessSecret,
       hash: _.get(signedValues, 'hash'),
       accessKey,
-      rts: _.get(signedValues, 'timestamp'),
-      version: 3
+      rts: _.get(signedValues, 'timestamp')
     }
     let result = acsignature.checkSignedPayload(payload2, options)
     expect(result).to.be.undefined
     return done()
   })
 
-  it('Check with nested payload and path', (done) => {
+  it('Check with nested payload and path - this is version 2', (done) => {
     let payload = {
       key2: 'is a string',
       key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
@@ -169,30 +170,31 @@ describe('Test signature format v1', function () {
       },
       key3: ['arrayValue1', 'arrayValue2'],
     }
-    let payload2 = { // == payload (but nested keys are reordered)
+   
+    // == payload will be ordered on top level only
+    let payload2 = {
+      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
       key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
-      key4: {
-        isEnabled: true,
-        isFoo: false,
-      },
       key3: ['arrayValue1', 'arrayValue2'],
+      key4: {
+        isFoo: false,
+        isEnabled: true,
+      }
     }
 
     let params = {
       accessSecret,
       path: '/v1/apiendpoint',
-      payload,
+      payload
     }
-    let signedValues = acsignature.sign(params, { version: 3 })
+    let signedValues = acsignature.sign(params)
 
     let options = {
       path: '/v1/apiendpoint',
       accessSecret,
       hash: _.get(signedValues, 'hash'),
       accessKey,
-      rts: _.get(signedValues, 'timestamp'),
-      version: 3
+      rts: _.get(signedValues, 'timestamp')
     }
     let result = acsignature.checkSignedPayload(payload2, options)
     expect(result).to.be.undefined
@@ -211,16 +213,17 @@ describe('Test signature format v1', function () {
       },
       key3: ['arrayValue1', 'arrayValue2'],
     }
-    let payload2 = { // == payload (but nested keys are reordered)
+    // == payload will be ordered on top level only
+    let payload2 = { 
       fileName: 'filename in uppercas letters',
       filename: 'filename in small letters',
+      key1: { xtreme: "foo", tags: [{ tagId: 123, flag: 0 }, { tagId: 124, flag: 1 }, null, {}] },
       key2: 'is a string',
-      key1: { xtreme: "foo", tags: [{ flag: 0, tagId: 123 }, { flag: 1, tagId: 124 }, null, {}] },
-      key4: {
-        isEnabled: true,
-        isFoo: false,
-      },
       key3: ['arrayValue1', 'arrayValue2'],
+      key4: {
+        isFoo: false,
+        isEnabled: true,
+      },
     }
 
     let params = {
@@ -228,15 +231,14 @@ describe('Test signature format v1', function () {
       path: '/v1/apiendpoint',
       payload,
     }
-    let signedValues = acsignature.sign(params, { version: 3 })
+    let signedValues = acsignature.sign(params)
 
     let options = {
       path: '/v1/apiendpoint',
       accessSecret,
       hash: _.get(signedValues, 'hash'),
       accessKey,
-      rts: _.get(signedValues, 'timestamp'),
-      version: 3
+      rts: _.get(signedValues, 'timestamp')
     }
     let result = acsignature.checkSignedPayload(payload2, options)
     expect(result).to.be.undefined

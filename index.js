@@ -28,21 +28,18 @@ const acSignature = () => {
   }
 
   // Shared payload sorting logic
+  // Version 1 and 2 sort keys alphabetically, version 3+ uses deep sorting
   const sortPayload = (data, version) => {
     if (version < 3) {
       const keys = _.sortBy(_.keys(data), (key) => key)
       const payload = {}
-      for (const [key, value] of Object.entries(data)) {
-        if (keys.includes(key)) {
-          // codacy:disable-next-line
-          payload[key] = value
-        }
-      }
+      keys.forEach((key) => {
+        payload[key] = data[key]
+      })
       return payload
     }
     return deepSortObjectKeys(data)
   }
-
 
   const deepSortObjectKeys = (obj) => {
     if (Array.isArray(obj)) {
@@ -134,7 +131,9 @@ const acSignature = () => {
   }
 
   const sign = (params, options) => {
-    const version = _.get(options, 'version', 1)
+    const path = (_.get(params, 'path') || '').split('?')[0]
+    const version = parseInt(_.get(options, 'version', (_.isString(path) ? 2 : 1)))
+
     const requirements = ['accessSecret']
     if (version < 2) requirements.push('controller', 'action')
     const missingProp = requirements.find(prop => !params[prop])
@@ -143,7 +142,6 @@ const acSignature = () => {
     const { accessKey, accessSecret, controller, action, identifier, debug: debugMode } = params
     
     const data = _.isObject(params.payload) && params.payload || {}
-    const path = (_.get(params, 'path') || '').split('?')[0]
     const ts = _.get(params, 'ts', parseInt(Date.now()/1000))
     
 
