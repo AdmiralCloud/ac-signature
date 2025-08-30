@@ -1,4 +1,13 @@
 
+## [4.0.8](https://github.com/mmpro/ac-signature/compare/v4.0.7..v4.0.8) (2025-08-30 06:38:12)
+
+
+### Bug Fix
+
+* **App:** Package updates | MP | [4d18aa41d00dfd12c5f65487d3dc2109efdb1a4b](https://github.com/mmpro/ac-signature/commit/4d18aa41d00dfd12c5f65487d3dc2109efdb1a4b)    
+Package updates  
+Related issues:
+
 ## [4.0.7](https://github.com/mmpro/ac-signature/compare/v4.0.6..v4.0.7) (2025-07-18 18:33:12)
 
 
