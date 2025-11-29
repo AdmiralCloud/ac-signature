@@ -1,7 +1,7 @@
 {
   "name": "ac-signature",
   "description": "Sign payload for AdmiralCloud API",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "author": "Mark Poepping (https://www.admiralcloud.com)",
   "contributors": [
     "Julius Eckert (https://www.admiralcloud.com)"
