@@ -1,4 +1,18 @@
 
+## [4.0.11](https://github.com/mmpro/ac-signature/compare/v4.0.10..v4.0.11) (2026-02-14 16:30:12)
+
+
+### Bug Fix
+
+* **App:** Package updates | MP (#25) | [bebe744ed62afbd2c2315cf2527866ab1ebcaa13](https://github.com/mmpro/ac-signature/commit/bebe744ed62afbd2c2315cf2527866ab1ebcaa13)    
+Package updates  
+Related issues:
+### Chores
+
+* **Misc:** Add permission to workflow | MP | [8ecfec32b987885e7fec00ca49b466083254608a](https://github.com/mmpro/ac-signature/commit/8ecfec32b987885e7fec00ca49b466083254608a)    
+Add permission to workflow  
+Related issues:
+
 ## [4.0.10](https://github.com/mmpro/ac-signature/compare/v4.0.9..v4.0.10) (2026-01-23 08:25:44)
 
 
