@@ -22,7 +22,7 @@ const acSignature = () => {
 
   // Timing-safe hash comparison helper
   const isHashEqual = (hash1, hash2) => {
-    if (hash1.length !== hash2.length) return false
+    if (hash1.length !== hash2.length) { return false }
     // codacy:disable-next-line
     return crypto.timingSafeEqual(Buffer.from(hash1, 'hex'), Buffer.from(hash2, 'hex'))
   }
@@ -47,7 +47,7 @@ const acSignature = () => {
     }
 
     if (isObject(obj)) {
-      let out = {}
+      const out = {}
       const sortedEntries = Object.entries(obj).sort(([a], [b]) => a.localeCompare(b))
       for (const [key, value] of sortedEntries) {
         // codacy:disable-next-line
@@ -82,44 +82,44 @@ const acSignature = () => {
 
   // Debug output for sign function
   const debugSignOutput = (version, accessKey, path, controller, action, valueToHash, ts, hash) => {
-    console.log(_.pad(`Create Signature V${version}`, 80, '-'))
+    console.warn(_.pad(`Create Signature V${version}`, 80, '-'))
     if (accessKey) {
-      console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
+      console.warn('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
     }
     if (version >= 2 && path) {
-      console.log('%s | %s | %s', debugPrefix, _.padEnd('Path', debugPadding), path)
+      console.warn('%s | %s | %s', debugPrefix, _.padEnd('Path', debugPadding), path)
     }
     else {
-      console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
+      console.warn('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
     }
-    console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
-    console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload length', debugPadding), valueToHash.length)
-    console.log('%s | %s | %s %s', debugPrefix, _.padEnd('TS type', debugPadding), typeof ts, ts)
-    console.log('%s | %s | %s', debugPrefix, _.padEnd('Calculated hash', debugPadding), hash)
-    console.log(_.repeat('-', 80))
+    console.warn('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
+    console.warn('%s | %s | %s', debugPrefix, _.padEnd('Payload length', debugPadding), valueToHash.length)
+    console.warn('%s | %s | %s %s', debugPrefix, _.padEnd('TS type', debugPadding), typeof ts, ts)
+    console.warn('%s | %s | %s', debugPrefix, _.padEnd('Calculated hash', debugPadding), hash)
+    console.warn(_.repeat('-', 80))
   }
 
   // Debug output for checkSignedPayload function
   const debugCheckOutput = (version, accessKey, path, controller, action, valueToHash, ts, calculatedHash, hash) => {
-    console.log(_.pad(`Check Signature V${version}`, 80, '-'))
+    console.warn(_.pad(`Check Signature V${version}`, 80, '-'))
     if (accessKey) {
-      console.log('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
+      console.warn('%s | %s | %s', debugPrefix, _.padEnd('API Key', debugPadding), accessKey)
     }
     if (version === 2) {
-      console.log('%s | %s | %s', debugPrefix, _.padEnd('Path', debugPadding), path)
+      console.warn('%s | %s | %s', debugPrefix, _.padEnd('Path', debugPadding), path)
     }
     else {
-      console.log('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
+      console.warn('%s | %s | %s/%s', debugPrefix, _.padEnd('Controller/Action', debugPadding), controller, action)
     }
-    console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
-    console.log('%s | %s | %s', debugPrefix, _.padEnd('Payload length', debugPadding), valueToHash.length)
-    console.log('%s | %s | %s %s', debugPrefix, _.padEnd('TS type', debugPadding), typeof ts, ts)
-    console.log('%s | %s | %s', debugPrefix, _.padEnd('Expected hash', debugPadding), calculatedHash)
-    console.log('%s | %s | %s', debugPrefix, _.padEnd('Sent hash', debugPadding), hash)
+    console.warn('%s | %s | %s', debugPrefix, _.padEnd('Payload to hash', debugPadding), valueToHash.replace(/\n/g, '/'))
+    console.warn('%s | %s | %s', debugPrefix, _.padEnd('Payload length', debugPadding), valueToHash.length)
+    console.warn('%s | %s | %s %s', debugPrefix, _.padEnd('TS type', debugPadding), typeof ts, ts)
+    console.warn('%s | %s | %s', debugPrefix, _.padEnd('Expected hash', debugPadding), calculatedHash)
+    console.warn('%s | %s | %s', debugPrefix, _.padEnd('Sent hash', debugPadding), hash)
     
     const result = isHashEqual(calculatedHash, hash) ? '\x1b[32m\u2714\x1b[0m OK' : '\x1b[31m\u274C\x1b[0m FAILED'
-    console.log('%s | %s | %s', debugPrefix, _.padEnd('Result', debugPadding), result)
-    console.log(_.repeat('-', 80))
+    console.warn('%s | %s | %s', debugPrefix, _.padEnd('Result', debugPadding), result)
+    console.warn(_.repeat('-', 80))
   }
 
   const sign5 = (params) => {
@@ -135,9 +135,9 @@ const acSignature = () => {
     const version = parseInt(_.get(options, 'version', (_.isString(path) ? 2 : 1)))
 
     const requirements = ['accessSecret']
-    if (version < 2) requirements.push('controller', 'action')
+    if (version < 2) { requirements.push('controller', 'action') }
     const missingProp = requirements.find(prop => !params[prop])
-    if (missingProp) return `${missingProp}_missing`
+    if (missingProp) { return `${missingProp}_missing` }
     
     const { accessKey, accessSecret, controller, action, identifier, debug: debugMode } = params
     
@@ -170,7 +170,7 @@ const acSignature = () => {
     const debugSignature = _.get(options, 'debugSignature', _.get(headers, 'x-admiralcloud-debugsignature'))
 
     if (!hash) {
-      let error = { message: errorPrefix + '_hashMissing', status: 401 }
+      const error = { message: errorPrefix + '_hashMissing', status: 401 }
       return error
     }
 
@@ -179,7 +179,7 @@ const acSignature = () => {
       const min = now - deviation
       const max = now + deviation
       if (ts < min || ts > max) {
-        let error = { message: errorPrefix + '_rtsDeviation', status: 401, additionalInfo: { ts, deviation } }
+        const error = { message: errorPrefix + '_rtsDeviation', status: 401, additionalInfo: { ts, deviation } }
         return error
       }
     }
@@ -199,7 +199,7 @@ const acSignature = () => {
     }
 
     let error
-    if (!isHashEqual(calculatedHash, hash)) error = { message: errorPrefix + '_hashMismatch', status: 401 }
+    if (!isHashEqual(calculatedHash, hash)) { error = { message: errorPrefix + '_hashMismatch', status: 401 } }
     return error
   }
 
