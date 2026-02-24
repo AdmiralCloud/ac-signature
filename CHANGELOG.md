@@ -1,3 +1,14 @@
+ 
+# [5.0.0](https://github.com/mmpro/ac-signature/compare/v4.0.11..v5.0.0) (2026-02-24 19:13:16)
+
+
+### Bug Fix
+
+* **Misc:** Package updates | MP | [4a5012ac81217a623dbc79bc73e8bb2f08652ba3](https://github.com/mmpro/ac-signature/commit/4a5012ac81217a623dbc79bc73e8bb2f08652ba3)    
+Package updates incl ESLint 9 -> 10 and lint fixes  
+Related issues:
+## BREAKING CHANGES
+* **Misc:** Requires at least Node 20
 
 ## [4.0.11](https://github.com/mmpro/ac-signature/compare/v4.0.10..v4.0.11) (2026-02-14 16:30:12)
 
