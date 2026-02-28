@@ -1,3 +1,17 @@
+
+## [5.0.1](https://github.com/mmpro/ac-signature/compare/v5.0.0..v5.0.1) (2026-02-28 12:22:52)
+
+
+### Bug Fix
+
+* **Misc:** Package updates | MP | [9756093787c437d70f7a8789d9cb493845300ef1](https://github.com/mmpro/ac-signature/commit/9756093787c437d70f7a8789d9cb493845300ef1)    
+Package updates  
+Related issues:
+### Chores
+
+* **Misc:** Remove Node 18 from workflow | MP | [08d71673bb4a5af16a5f12e5d9ef6b2b24bafd46](https://github.com/mmpro/ac-signature/commit/08d71673bb4a5af16a5f12e5d9ef6b2b24bafd46)    
+Remove Node 18 from workflow  
+Related issues:
  
 # [5.0.0](https://github.com/mmpro/ac-signature/compare/v4.0.11..v5.0.0) (2026-02-24 19:13:16)
 
