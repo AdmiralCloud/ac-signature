@@ -1,5 +1,7 @@
 # ac-signature
 
+[![Node.js CI](https://github.com/AdmiralCloud/ac-signature/actions/workflows/node.js.yml/badge.svg)](https://github.com/AdmiralCloud/ac-signature/actions/workflows/node.js.yml)
+
 This module helps you to sign request for the AdmiralCloud media asset management.
 https://www.admiralcloud.com
 
