@@ -1,3 +1,18 @@
+## [5.0.3](https://github.com/mmpro/ac-signature/compare/v5.0.2..v5.0.3) (2026-04-04 09:11:02)
+
+
+### Bug Fix
+
+
+* **App:** Package updates | MP | [f5c152e1628f0f88351fa4bf65d0c17696b75578](https://github.com/mmpro/ac-signature/commit/f5c152e1628f0f88351fa4bf65d0c17696b75578)    
+Package update  
+Related issues:
+### Chores
+
+
+* **App:** Added Github worfklows | MP | [a6c1f55696f3154d316ada00a8e5aa19ea339e9a](https://github.com/mmpro/ac-signature/commit/a6c1f55696f3154d316ada00a8e5aa19ea339e9a)    
+Added Github worfklows and badges  
+Related issues:
 
 ## [5.0.2](https://github.com/mmpro/ac-signature/compare/v5.0.1..v5.0.2) (2026-03-21 11:15:27)
 
