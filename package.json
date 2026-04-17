@@ -1,7 +1,7 @@
 {
   "name": "ac-signature",
   "description": "Sign payload for AdmiralCloud API",
-  "version": "4.0.11",
+  "version": "5.0.4",
   "author": "Mark Poepping (https://www.admiralcloud.com)",
   "contributors": [
     "Julius Eckert (https://www.admiralcloud.com)"
@@ -20,13 +20,15 @@
     "signature"
   ],
   "dependencies": {
-    "lodash": "^4.17.23"
+    "lodash": "^4.18.1",
+    "superagent": "^10.3.0"
   },
   "devDependencies": {
-    "ac-semantic-release": "^0.4.10",
-    "c8": "^10.1.3",
+    "ac-semantic-release": "^1.0.1",
+    "c8": "^11.0.0",
     "chai": "^4.5.0",
-    "eslint": "^9.39.2",
+    "eslint": "^10.2.0",
+    "globals": "^17.5.0",
     "mocha": "^11.7.5"
   },
   "scripts": {
@@ -35,11 +37,13 @@
     "coverage": "./node_modules/c8/bin/c8.js yarn test"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "resolutions": {
     "braces": "^3.0.3",
-    "mocha/diff": "^8.0.3"
+    "mocha/diff": "^8.0.3",
+    "minimatch": "^10.2.1",
+    "mocha/serialize-javascript": "^7.0.3"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

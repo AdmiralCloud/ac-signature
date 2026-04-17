@@ -1,3 +1,60 @@
+## [5.0.4](https://github.com/mmpro/ac-signature/compare/v5.0.3..v5.0.4) (2026-04-17 07:48:02)
+
+
+### Bug Fix
+
+
+* **App:** Package updates | MP | [2e393466aac0a589d0bb2e4c63e43ff8d55fc313](https://github.com/mmpro/ac-signature/commit/2e393466aac0a589d0bb2e4c63e43ff8d55fc313)    
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+## [5.0.3](https://github.com/mmpro/ac-signature/compare/v5.0.2..v5.0.3) (2026-04-04 09:11:02)
+
+
+### Bug Fix
+
+
+* **App:** Package updates | MP | [f5c152e1628f0f88351fa4bf65d0c17696b75578](https://github.com/mmpro/ac-signature/commit/f5c152e1628f0f88351fa4bf65d0c17696b75578)    
+Package update  
+Related issues:
+### Chores
+
+
+* **App:** Added Github worfklows | MP | [a6c1f55696f3154d316ada00a8e5aa19ea339e9a](https://github.com/mmpro/ac-signature/commit/a6c1f55696f3154d316ada00a8e5aa19ea339e9a)    
+Added Github worfklows and badges  
+Related issues:
+
+## [5.0.2](https://github.com/mmpro/ac-signature/compare/v5.0.1..v5.0.2) (2026-03-21 11:15:27)
+
+
+### Bug Fix
+
+* **App:** Package updates | MP | [41cb83690043a5fb105cf954c6f610c56b00f782](https://github.com/mmpro/ac-signature/commit/41cb83690043a5fb105cf954c6f610c56b00f782)    
+Package updates  
+Related issues:
+
+## [5.0.1](https://github.com/mmpro/ac-signature/compare/v5.0.0..v5.0.1) (2026-02-28 12:22:52)
+
+
+### Bug Fix
+
+* **Misc:** Package updates | MP | [9756093787c437d70f7a8789d9cb493845300ef1](https://github.com/mmpro/ac-signature/commit/9756093787c437d70f7a8789d9cb493845300ef1)    
+Package updates  
+Related issues:
+### Chores
+
+* **Misc:** Remove Node 18 from workflow | MP | [08d71673bb4a5af16a5f12e5d9ef6b2b24bafd46](https://github.com/mmpro/ac-signature/commit/08d71673bb4a5af16a5f12e5d9ef6b2b24bafd46)    
+Remove Node 18 from workflow  
+Related issues:
+ 
+# [5.0.0](https://github.com/mmpro/ac-signature/compare/v4.0.11..v5.0.0) (2026-02-24 19:13:16)
+
+
+### Bug Fix
+
+* **Misc:** Package updates | MP | [4a5012ac81217a623dbc79bc73e8bb2f08652ba3](https://github.com/mmpro/ac-signature/commit/4a5012ac81217a623dbc79bc73e8bb2f08652ba3)    
+Package updates incl ESLint 9 -> 10 and lint fixes  
+Related issues:
+## BREAKING CHANGES
+* **Misc:** Requires at least Node 20
 
 ## [4.0.11](https://github.com/mmpro/ac-signature/compare/v4.0.10..v4.0.11) (2026-02-14 16:30:12)
 
