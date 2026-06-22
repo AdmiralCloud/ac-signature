@@ -1,3 +1,11 @@
+## [5.0.9](https://github.com/mmpro/ac-signature/compare/v5.0.8..v5.0.9) (2026-06-22 16:08:41)
+
+
+### Bug Fix
+
+
+* **App:** Package updates | MP | [ed1f779babbbfaabbc5ffcdf65f7afc90e775d68](https://github.com/mmpro/ac-signature/commit/ed1f779babbbfaabbc5ffcdf65f7afc90e775d68)    
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 ## [5.0.8](https://github.com/mmpro/ac-signature/compare/v5.0.7..v5.0.8) (2026-06-22 15:08:34)
 
 
